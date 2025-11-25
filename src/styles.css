@@ -114,10 +114,11 @@ body {
 
 .chat-input {
   display: flex;
+  background: var(--input-bg);
   gap: 8px;
   padding: 8px;
   align-items: center;
-  border-top: 1px solid var(--border);
+  border-top: 1px solid var(--input-bg);
 }
 
 .chat-input textarea {
@@ -127,8 +128,55 @@ body {
   padding: 8px;
   background: var(--input-bg);
   color: var(--text);
-  border: 1px solid var(--border);
+  border: 1px solid var(--input-bg);
   resize: none;
+}
+
+/* Ensure textarea selection (highlight) is not red */
+.chat-input textarea::selection { background: #cfe9ff; color: #02243a; }
+.chat-input textarea::-moz-selection { background: #cfe9ff; color: #02243a; }
+
+/* Prevent browser invalid styling (red) */
+.chat-input textarea:invalid { box-shadow: none; border-color: var(--input-bg); }
+
+/* Icon button styles for upload/send */
+.icon-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background: transparent;
+  cursor: pointer;
+  padding: 6px;
+}
+.icon-btn:hover { background: rgba(255,255,255,0.03); }
+.icon-btn:disabled { opacity: 0.6; cursor: not-allowed; }
+
+/* send accent */
+.icon-btn.send-btn {
+  background: linear-gradient(90deg,#1e82e6,#0b6ed3);
+  color: #fff;
+  border: none;
+}
+
+/* file uploader button adjustments */
+.file-uploader { display: inline-flex; margin-right: 8px; }
+.file-uploader .icon-btn { width: 38px; height: 38px; padding: 4px; }
+
+/* ensure textarea style matches earlier rules */
+.chat-textarea {
+  flex: 1;
+  min-height: 64px;
+  border-radius: 8px;
+  padding: 8px;
+  background: var(--input-bg);
+  color: var(--text);
+  border: 1px solid var(--input-bg);
+  resize: none;
+  outline: none;
 }
 
 .modal-overlay {
