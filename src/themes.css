@@ -1,0 +1,48 @@
+/* src/themes.css
+   All themeable colors use CSS variables. Set data-theme="light" or "dark" on <html>.
+*/
+
+:root {
+  /* Fallback values (dark by default) */
+  --bg: #0b1220;
+  --panel: #071022;
+  --panel-2: #020617;
+  --muted: #94a3b8;
+  --text: #e6eef8;
+  --accent: #7c3aed;
+  --message-user-bg: #0b2a2f;
+  --message-assistant-bg: #08142a;
+  --modal-bg: #071126;
+  --input-bg: #041022;
+  --border: rgba(255,255,255,0.04);
+}
+
+/* Dark theme (explicit) */
+[data-theme="dark"] {
+  --bg: #0b1220;
+  --panel: #071022;
+  --panel-2: #020617;
+  --muted: #94a3b8;
+  --text: #e6eef8;
+  --accent: #7c3aed;
+  --message-user-bg: #0b2a2f;
+  --message-assistant-bg: #08142a;
+  --modal-bg: #071126;
+  --input-bg: #041022;
+  --border: rgba(255,255,255,0.04);
+}
+
+/* Light theme */
+[data-theme="light"] {
+  --bg: #f6f7fb;
+  --panel: #ffffff;
+  --panel-2: #f4f6fb;
+  --muted: #475569;
+  --text: #0b1220;
+  --accent: #7c3aed; /* you can change accent for light theme if desired */
+  --message-user-bg: #e6f3f2;
+  --message-assistant-bg: #f1f5f9;
+  --modal-bg: #ffffff;
+  --input-bg: #ffffff;
+  --border: rgba(10, 20, 30, 0.06);
+}

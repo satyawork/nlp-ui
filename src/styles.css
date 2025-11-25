@@ -1,0 +1,189 @@
+:root {
+  color-scheme: dark;
+  font-family: Inter, system-ui, Arial, sans-serif;
+}
+
+/* Use CSS variables for all colors */
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: Inter, system-ui, Arial, sans-serif;
+}
+
+.app-grid {
+  display: grid;
+  grid-template-columns: 260px 1fr;
+  gap: 12px;
+  height: 100vh;
+  padding: 12px;
+  box-sizing: border-box;
+}
+
+.left-panel {
+  background: var(--panel);
+  padding: 8px;
+  border-radius: 8px;
+  overflow: auto;
+  border: 1px solid var(--border);
+}
+
+.main-panel {
+  background: var(--panel-2);
+  padding: 8px;
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  border: 1px solid var(--border);
+}
+
+.session-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.session-list li {
+  padding: 8px;
+  border-radius: 6px;
+  cursor: pointer;
+  border: 1px solid transparent;
+  transition:
+    transform 180ms ease,
+    opacity 180ms ease,
+    background-color 180ms ease;
+  will-change: transform, opacity;
+  display: block;
+  overflow: hidden;
+}
+
+.session-list li.active {
+  background: rgba(0,0,0,0.06);
+  border-color: var(--accent);
+}
+.session-list li.removing {
+  opacity: 0;
+  transform: translateX(-8px) scale(0.99);
+  pointer-events: none;
+}
+.session-list .session-name { margin-bottom: 4px; }
+
+.session-list input {
+  width: 100%;
+  box-sizing: border-box;
+}
+.session-list button {
+  padding: 6px 8px;
+  background: transparent;
+  border: 1px solid var(--border);
+  color: var(--text);
+  border-radius: 6px;
+  cursor: pointer;
+}
+.chat-container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.message-list {
+  flex: 1;
+  overflow: auto;
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.message {
+  max-width: 70%;
+  padding: 8px 10px;
+  border-radius: 8px;
+  color: var(--text);
+}
+
+.message.user {
+  align-self: flex-end;
+  background: var(--message-user-bg);
+}
+
+.message.assistant {
+  align-self: flex-start;
+  background: var(--message-assistant-bg);
+}
+
+.chat-input {
+  display: flex;
+  gap: 8px;
+  padding: 8px;
+  align-items: center;
+  border-top: 1px solid var(--border);
+}
+
+.chat-input textarea {
+  flex: 1;
+  min-height: 64px;
+  border-radius: 8px;
+  padding: 8px;
+  background: var(--input-bg);
+  color: var(--text);
+  border: 1px solid var(--border);
+  resize: none;
+}
+
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(2,6,23,0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.modal {
+  width: 760px;
+  background: var(--modal-bg);
+  padding: 16px;
+  border-radius: 8px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.6);
+  border: 1px solid var(--border);
+}
+
+.api-item {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.settings-button {
+  position: fixed;
+  right: 20px;
+  bottom: 20px;
+}
+
+/* Utility */
+button {
+  background: transparent;
+  border: 1px solid var(--border);
+  color: var(--text);
+  padding: 6px 10px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+button:hover { opacity: 0.95; }
+input, select {
+  background: var(--input-bg);
+  color: var(--text);
+  border: 1px solid var(--border);
+  padding: 6px 8px;
+  border-radius: 6px;
+}
+:root {
+  --transition-duration: 220ms;
+}
+
+*,
+*::before,
+*::after {
+  transition: background-color var(--transition-duration) ease, color var(--transition-duration) ease, border-color var(--transition-duration) ease;
+}
