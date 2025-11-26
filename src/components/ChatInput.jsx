@@ -7,14 +7,21 @@ export default function ChatInput({ onSend }) {
 
   async function handleSend() {
     if (!text.trim() && files.length === 0) return;
-    await onSend(text.trim(), files);
+    
+    const message = text.trim();
+    const fileList = [...files];
+    
+    // Clear textarea immediately
     setText('');
     setFiles([]);
+    
+    // Send to parent with cleared state
+    await onSend(message, fileList);
   }
 
   function onKeyDown(e) {
-    // Ctrl/Cmd + Enter to send
-    if (e.key === 'Enter' && (e.ctrlKey || e.metaKey)) {
+    // Send on Enter key (plain or Ctrl/Cmd+Enter)
+    if (e.key === 'Enter' && !e.shiftKey) {
       e.preventDefault();
       handleSend();
     }
@@ -22,28 +29,27 @@ export default function ChatInput({ onSend }) {
 
   return (
     <div className="chat-input">
-      <FileUploader onUploaded={(meta) => setFiles(prev => [...prev, meta])} />
-      <textarea
-        className="chat-textarea"
-        value={text}
-        onChange={e => setText(e.target.value)}
-        onKeyDown={onKeyDown}
-        placeholder="Type your message..."
-      />
-      <div className="input-actions">
-        <button
-          className="icon-btn send-btn"
-          onClick={handleSend}
-          aria-label="Send message"
-          title="Send (Ctrl/Cmd+Enter)"
-        >
-          {/* paper-plane icon */}
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden>
-            <path d="M22 2L11 13" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"/>
-            <path d="M22 2l-7 20-4-9-9-4 20-7z" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" opacity="0.2"/>
-          </svg>
-        </button>
+      <div className="input-container">
+        <FileUploader onUploaded={(meta) => setFiles(prev => [...prev, meta])} />
+        <textarea
+          className="chat-textarea"
+          value={text}
+          onChange={e => setText(e.target.value)}
+          onKeyDown={onKeyDown}
+          placeholder="Type your message..."
+        />
       </div>
+      <button
+        className="icon-btn send-btn"
+        onClick={handleSend}
+        aria-label="Send message"
+        title="Send (Enter)"
+      >
+        {/* paper-plane icon */}
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden>
+          <path fillRule="evenodd" d="M4.10514201,11.8070619 L2.74013818,2.2520351 L22.236068,12 L2.74013818,21.7479649 L4.10514201,12.1929381 L4.87689437,12 L4.10514201,11.8070619 Z M5.25986182,5.7479649 L5.89485799,10.1929381 L13.1231056,12 L5.89485799,13.8070619 L5.25986182,18.2520351 L17.763932,12 L5.25986182,5.7479649 Z" fill="currentColor"/>
+        </svg>
+      </button>
     </div>
   );
 }

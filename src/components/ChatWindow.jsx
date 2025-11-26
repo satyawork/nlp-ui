@@ -22,20 +22,54 @@ export default function ChatWindow() {
     load();
   }, [current]);
 
-  async function sendMessage(text, files=[]) {
+  async function sendMessage(text, files = []) {
     if (!current) return;
+
+    // Create user message object and add to UI immediately
+    const userMessage = {
+      id: 'msg-' + Date.now(),
+      role: 'user',
+      text: text,
+      ts: new Date().toISOString()
+    };
+
+    // Update UI with user message immediately
+    setSessionData(prev => ({
+      ...prev,
+      messages: [...(prev?.messages || []), userMessage]
+    }));
+
+    // Send to server
     const apiId = current.apiId || (settings.apis[0] && settings.apis[0].id);
     const payload = { apiId, prompt: text, sessionId: current.id, options: { files } };
-    const resp = await fetch('/api/chat', { method: 'POST', headers: {'Content-Type':'application/json'}, body: JSON.stringify(payload) });
+    
+    setLoading(true);
+    const resp = await fetch('/api/chat', { 
+      method: 'POST', 
+      headers: { 'Content-Type': 'application/json' }, 
+      body: JSON.stringify(payload) 
+    });
+    
     const j = await resp.json();
+    setLoading(false);
+
     if (j.ok) {
-      // reload session
+      // Reload session to get assistant response
       const r2 = await fetch(`/api/sessions/${current.id}`);
       const j2 = await r2.json();
       if (j2.ok) setSessionData(j2.session);
     } else {
-      // show error as assistant message
-      setSessionData(prev => ({ ...prev, messages: [...(prev?.messages||[]), { id: 'err-'+Date.now(), role: 'assistant', text: 'Error: '+j.error, ts: new Date().toISOString() }] }));
+      // Show error as assistant message
+      const errorMessage = {
+        id: 'err-' + Date.now(),
+        role: 'assistant',
+        text: 'Error: ' + j.error,
+        ts: new Date().toISOString()
+      };
+      setSessionData(prev => ({
+        ...prev,
+        messages: [...(prev?.messages || []), errorMessage]
+      }));
     }
   }
 
@@ -44,19 +78,53 @@ export default function ChatWindow() {
   return (
     <div className="chat-container">
       <div className="chat-header">
-        <h3>{current.name}</h3>
-        <div className="chat-controls">API: <ApiSelector current={current} /></div>
+        <div className="header-left">
+          <h2>How can I help you today?</h2>
+          <p className="header-subtitle">AI-powered assistance at your fingertips</p>
+        </div>
+        <div className="header-right">
+          <ApiSelector current={current} settings={settings} />
+        </div>
       </div>
-      <MessageList messages={sessionData?.messages || []} />
+      <div className="message-list-container">
+        <MessageList messages={sessionData?.messages || []} loading={loading} />
+      </div>
       <ChatInput onSend={sendMessage} />
     </div>
   );
 }
 
-function ApiSelector({ current }) {
-  const { settings, saveSettings } = useApiSettings();
-  const { renameSession } = useChatSessions(); // for later
-  // For now show simple text of api name
-  const api = (settings.apis || []).find(a => a.id === current.apiId);
-  return <span>{api ? api.name : 'No API selected'}</span>;
+function ApiSelector({ current, settings }) {
+  const [isOpen, setIsOpen] = useState(false);
+  const api = (settings.apis || []).find(a => a.id === current?.apiId);
+
+  return (
+    <div className="api-selector">
+      <button 
+        className="api-selector-btn"
+        onClick={() => setIsOpen(!isOpen)}
+        title="Select API"
+      >
+        <span className="api-indicator">●</span>
+        <span className="api-name">{api ? api.name : 'Select API'}</span>
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden>
+          <path d="M6 9l6 6 6-6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+        </svg>
+      </button>
+      {isOpen && (
+        <div className="api-dropdown">
+          {(settings.apis || []).map(a => (
+            <div
+              key={a.id}
+              className={`api-option ${api?.id === a.id ? 'active' : ''}`}
+              onClick={() => setIsOpen(false)}
+            >
+              <span className="api-dot">●</span>
+              {a.name}
+            </div>
+          ))}
+        </div>
+      )}
+    </div>
+  );
 }

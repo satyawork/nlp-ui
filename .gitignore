@@ -38,3 +38,5 @@ server/public/uploads/
 # Cache
 .cache/
 .next/
+server/data/sessions.json
+Llama-3-Groq-70B-Tool-Use/
