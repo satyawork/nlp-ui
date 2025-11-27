@@ -1,4 +1,5 @@
 import React, { useEffect, useRef } from 'react';
+// import './MessageList.css'; // new styles for loader
 
 export default function MessageList({ messages }) {
   const endRef = useRef(null);
@@ -11,10 +12,21 @@ export default function MessageList({ messages }) {
   return (
     <div className="message-list">
       {messages.map(m => (
-        <div key={m.id} className={`message ${m.role}`}>
+        <div key={m.id} className={`message ${m.role} ${m.loading ? 'loading-message' : ''}`}>
           <div className="message-bubble">
-            <div className="message-body">{m.text}</div>
-            <div className="message-ts">{ new Date(m.ts).toLocaleTimeString() }</div>
+            {m.loading ? (
+              <div className="loader-wrapper">
+                <div className="loader-dots" aria-hidden>
+                  <span></span><span></span><span></span>
+                </div>
+                <div className="loader-label">Thinking</div>
+              </div>
+            ) : (
+              <>
+                <div className="message-body">{m.text}</div>
+                <div className="message-ts">{ new Date(m.ts).toLocaleTimeString() }</div>
+              </>
+            )}
           </div>
         </div>
       ))}

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import ThemeToggle from '../contexts/ThemeToggle';
 import { useApiSettings } from '../contexts/ApiSettingsContext';
+import { useChatSessions } from '../contexts/ChatSessionsContext';
 
 /**
  * API Settings Modal
@@ -9,13 +10,14 @@ import { useApiSettings } from '../contexts/ApiSettingsContext';
  * - Add/Edit/Delete API configurations
  * - Configure API endpoint (baseUrl)
  * - Add custom headers (Authorization, etc.)
- * - Test API connectivity
+ * - Select active API (radio button)
  * 
  * Simplified design: Only requires name and baseUrl
  * All APIs are POST requests by default
  */
 export default function ApiSettingsModal({ onClose }) {
   const { settings, saveSettings } = useApiSettings();
+  const { current, setCurrent } = useChatSessions();
   const [local, setLocal] = useState(settings);
   const [editingId, setEditingId] = useState(null);
   const [formData, setFormData] = useState({
@@ -40,6 +42,15 @@ export default function ApiSettingsModal({ onClose }) {
   }, [onClose]);
 
   /**
+   * Select an API as active
+   */
+  function handleSelectApi(apiId) {
+    if (current) {
+      setCurrent({ ...current, apiId });
+    }
+  }
+
+  /**
    * Initialize new API form
    */
   function addApi() {
@@ -50,16 +61,6 @@ export default function ApiSettingsModal({ onClose }) {
       headers: []
     });
     setEditingId('new');
-  }
-
-  /**
-   * Delete API at index and persist
-   */
-  function removeApiAt(index) {
-    const copy = JSON.parse(JSON.stringify(local || { apis: [] }));
-    copy.apis.splice(index, 1);
-    setLocal(copy);
-    saveSettings(copy);
   }
 
   /**
@@ -107,35 +108,6 @@ export default function ApiSettingsModal({ onClose }) {
     }
   }
 
-  /**
-   * Update header value for an API
-   */
-  function updateHeader(apiIndex, headerIndex, key, value) {
-    const copy = JSON.parse(JSON.stringify(local));
-    if (!copy.apis[apiIndex].headers) copy.apis[apiIndex].headers = [];
-    copy.apis[apiIndex].headers[headerIndex] = { key, value };
-    setLocal(copy);
-  }
-
-  /**
-   * Add new header to API
-   */
-  function addHeader(apiIndex) {
-    const copy = JSON.parse(JSON.stringify(local));
-    if (!copy.apis[apiIndex].headers) copy.apis[apiIndex].headers = [];
-    copy.apis[apiIndex].headers.push({ key: '', value: '' });
-    setLocal(copy);
-  }
-
-  /**
-   * Remove header from API
-   */
-  function removeHeader(apiIndex, headerIndex) {
-    const copy = JSON.parse(JSON.stringify(local));
-    copy.apis[apiIndex].headers.splice(headerIndex, 1);
-    setLocal(copy);
-  }
-
   return (
     <div className="modal-overlay" onClick={onClose}>
       <div className="modal" onClick={(e) => e.stopPropagation()}>
@@ -163,18 +135,30 @@ export default function ApiSettingsModal({ onClose }) {
           {/* List of existing APIs */}
           {(local?.apis || []).length > 0 && (
             <div className="api-list">
-              <div className="api-list-title">Configured APIs</div>
-              {(local.apis || []).map((api, i) => (
+              <div className="api-list-title">Available APIs</div>
+              {(local.apis || []).map((api) => (
                 <div key={api.id} className="api-item">
-                  {/* API Basic Info */}
-                  <div className="api-summary">
-                    <div className="api-name-display">{api.name}</div>
-                    <div className="api-url-display">{api.baseUrl}</div>
-                    {api.headers && api.headers.length > 0 && (
-                      <div className="api-headers-count">
-                        {api.headers.length} header{api.headers.length !== 1 ? 's' : ''}
+                  {/* Radio Button + API Info */}
+                  <div className="api-selector-wrapper">
+                    <input
+                      type="radio"
+                      id={`api-radio-${api.id}`}
+                      name="selected-api"
+                      checked={current?.apiId === api.id}
+                      onChange={() => handleSelectApi(api.id)}
+                      className="api-radio"
+                    />
+                    <label htmlFor={`api-radio-${api.id}`} className="api-radio-label">
+                      <div className="api-summary">
+                        <div className="api-name-display">{api.name}</div>
+                        <div className="api-url-display">{api.baseUrl}</div>
+                        {api.headers && api.headers.length > 0 && (
+                          <div className="api-headers-count">
+                            {api.headers.length} header{api.headers.length !== 1 ? 's' : ''}
+                          </div>
+                        )}
                       </div>
-                    )}
+                    </label>
                   </div>
 
                   {/* API Actions */}
@@ -244,14 +228,22 @@ export default function ApiSettingsModal({ onClose }) {
                         type="text"
                         placeholder="Header name"
                         value={header.key}
-                        onChange={(e) => updateHeader(formData.headers.indexOf(header), hIndex, e.target.value, header.value)}
+                        onChange={(e) => {
+                          const newHeaders = [...formData.headers];
+                          newHeaders[hIndex].key = e.target.value;
+                          setFormData({ ...formData, headers: newHeaders });
+                        }}
                         className="header-key"
                       />
                       <input
                         type="text"
                         placeholder="Header value (hidden)"
                         value={header.value}
-                        onChange={(e) => updateHeader(formData.headers.indexOf(header), hIndex, header.key, e.target.value)}
+                        onChange={(e) => {
+                          const newHeaders = [...formData.headers];
+                          newHeaders[hIndex].value = e.target.value;
+                          setFormData({ ...formData, headers: newHeaders });
+                        }}
                         className="header-value"
                       />
                       <button

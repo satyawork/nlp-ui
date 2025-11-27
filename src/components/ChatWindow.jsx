@@ -40,11 +40,12 @@ export default function ChatWindow() {
       messages: [...(prev?.messages || []), userMessage]
     }));
 
-    // Show loading message
+    // Show loading message (rendered as animated 3-dot loader in MessageList)
     const loadingMessage = {
       id: 'loading-' + Date.now(),
       role: 'assistant',
-      text: 'Waiting for response...',
+      loading: true,                 // flag for MessageList to render loader
+      text: '',                      // keep text empty for loader
       ts: new Date().toISOString()
     };
     setLoadingMessageId(loadingMessage.id);
@@ -109,7 +110,6 @@ export default function ChatWindow() {
       <div className="chat-header">
         <div className="header-left">
           <h2>How can I help you today?</h2>
-          <p className="header-subtitle">AI-powered assistance at your fingertips</p>
         </div>
         <div className="header-right">
           <ApiSelector current={current} settings={settings} />
