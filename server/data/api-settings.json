@@ -1,15 +1,10 @@
 {
   "apis": [
     {
-      "id": "1764134788971",
-      "name": "Local Model",
+      "id": "api-1764239747480",
+      "name": "Llama-3-Groq-70B-Tool-Use",
       "baseUrl": "http://127.0.0.1:8000/v1/completions",
-      "method": "POST",
-      "adapter": "completions",
-      "headers": [],
-      "authType": "none",
-      "authValue": "",
-      "storeSecret": false
+      "headers": []
     }
   ]
 }

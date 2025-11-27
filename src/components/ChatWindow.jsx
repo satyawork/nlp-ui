@@ -9,6 +9,7 @@ export default function ChatWindow() {
   const { settings } = useApiSettings();
   const [sessionData, setSessionData] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [loadingMessageId, setLoadingMessageId] = useState(null); // New state for loading message
 
   useEffect(() => {
     async function load() {
@@ -39,9 +40,31 @@ export default function ChatWindow() {
       messages: [...(prev?.messages || []), userMessage]
     }));
 
-    // Send to server
+    // Show loading message
+    const loadingMessage = {
+      id: 'loading-' + Date.now(),
+      role: 'assistant',
+      text: 'Waiting for response...',
+      ts: new Date().toISOString()
+    };
+    setLoadingMessageId(loadingMessage.id);
+    setSessionData(prev => ({
+      ...prev,
+      messages: [...(prev?.messages || []), loadingMessage]
+    }));
+
+    // Send to server with increased max_tokens
     const apiId = current.apiId || (settings.apis[0] && settings.apis[0].id);
-    const payload = { apiId, prompt: text, sessionId: current.id, options: { files } };
+    const payload = { 
+      apiId, 
+      prompt: text, 
+      sessionId: current.id, 
+      options: { 
+        files,
+        max_tokens: 1800,  // Increased from 1800 to 4096
+        temperature: 0.7
+      } 
+    };
     
     setLoading(true);
     const resp = await fetch('/api/chat', { 
@@ -52,6 +75,12 @@ export default function ChatWindow() {
     
     const j = await resp.json();
     setLoading(false);
+
+    // Remove loading message
+    setSessionData(prev => ({
+      ...prev,
+      messages: prev.messages.filter(m => m.id !== loadingMessage.id)
+    }));
 
     if (j.ok) {
       // Reload session to get assistant response
