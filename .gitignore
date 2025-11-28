@@ -8,7 +8,7 @@ build/
 out/
 .vite/
 .vite-cache/
-
+server/data/
 # Environment files
 .env
 .env.local
