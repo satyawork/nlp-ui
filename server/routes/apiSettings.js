@@ -27,6 +27,7 @@ router.post('/test', async (req, res) => {
   const { config } = req.body;
   if (!config || !config.baseUrl) return res.status(400).json({ ok: false, error: 'missing config or baseUrl' });
   try {
+    // Hitting the provided config.baseUrl to test connectivity
     const testRes = await fetch(config.baseUrl, { method: config.method || 'GET' });
     res.json({ ok: true, status: testRes.status });
   } catch (e) {

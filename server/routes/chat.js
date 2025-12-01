@@ -28,24 +28,24 @@ router.post('/', async (req, res) => {
   console.log(apiId, prompt, sessionId, options);
   // Validate required fields
   if (!apiId || !prompt) {
-    return res.status(400).json({ 
-      ok: false, 
-      error: 'apiId and prompt required' 
+    return res.status(400).json({
+      ok: false,
+      error: 'apiId and prompt required'
     });
   }
 
   // Fetch API configuration from settings
   const settings = await ApiSettingsStore.getSettings();
   const api = (settings.apis || []).find(a => a.id === apiId);
-  
+
   // Check if API exists in configuration
   if (!api) {
-    return res.status(400).json({ 
-      ok: false, 
-      error: 'apiId not found' 
+    return res.status(400).json({
+      ok: false,
+      error: 'apiId not found'
     });
   }
-  
+
   // Log request for debugging
   console.log('[chat] apiId=', apiId, 'prompt=', prompt.slice(0, 30) + '...', 'sessionId=', sessionId);
 
@@ -56,11 +56,11 @@ router.post('/', async (req, res) => {
     session = await SessionsStore.getSession(sessionId);
     if (session) {
       // Add user's message to the session
-      session.messages.push({ 
-        id: 'm-' + Date.now(), 
-        role: 'user', 
-        text: prompt, 
-        ts: nowIso() 
+      session.messages.push({
+        id: 'm-' + Date.now(),
+        role: 'user',
+        text: prompt,
+        ts: nowIso()
       });
       session.updatedAt = nowIso();
       await SessionsStore.saveSession(session);
@@ -72,7 +72,7 @@ router.post('/', async (req, res) => {
     // Step 1: Prepare headers for API request
     // ========================================
     const headers = { 'Content-Type': 'application/json' };
-    
+
     // Add any custom headers configured in API settings
     // Example: Authorization, X-API-Key, etc.
     (api.headers || []).forEach(h => {
@@ -83,18 +83,18 @@ router.post('/', async (req, res) => {
     // Step 2: Build request body
     // ========================================
     const body = {
-      prompt: prompt,  // The user's message
+      query: prompt,   // The user's message (changed from prompt to query)
       ...options       // Spread any additional options (temperature, max_tokens, etc.)
     };
 
     // Log request details for debugging
     console.log('[chat] POST to', api.baseUrl);
-    console.log('[chat] Headers:', JSON.stringify(headers, null, 2));
-    console.log('[chat] Body:', JSON.stringify(body, null, 2));
 
     // ========================================
     // Step 3: Call the external API
     // ========================================
+    // Hitting the external API endpoint configured in settings (e.g., https://api.openai.com/v1/completions)
+    console.log(" Sending body: { query: \"...\", max_tokens: ..., temperature: ... }:", JSON.stringify(body))
     const apiRes = await fetch(api.baseUrl, {
       method: 'POST',
       headers: headers,
@@ -109,20 +109,21 @@ router.post('/', async (req, res) => {
     // ========================================
     let output = '';
     const contentType = (apiRes.headers.get('content-type') || '').toLowerCase();
-    
+
     if (contentType.includes('json')) {
       // If response is JSON, extract text from common response formats
       const json = await apiRes.json();
       console.log('[chat] Response body:', JSON.stringify(json, null, 2));
-      
+
       // Try multiple common response structures:
       // - OpenAI/vLLM format: { choices: [{ text: "..." }] }
       // - Generic format: { output: "..." } or { result: "..." }
       // - Simple format: { text: "..." }
-      output = json.choices?.[0]?.text 
-        ?? json.output 
-        ?? json.result 
-        ?? json.text 
+      output = json.choices?.[0]?.text
+        ?? json.response
+        ?? json.output
+        ?? json.result
+        ?? json.text
         ?? JSON.stringify(json);  // Fallback: return entire response as string
     } else {
       // If response is plain text, use it directly
@@ -135,11 +136,11 @@ router.post('/', async (req, res) => {
     // ========================================
     if (session) {
       // Add assistant's response to the session
-      session.messages.push({ 
-        id: 'm-' + Date.now(), 
-        role: 'assistant', 
-        text: output, 
-        ts: nowIso() 
+      session.messages.push({
+        id: 'm-' + Date.now(),
+        role: 'assistant',
+        text: output,
+        ts: nowIso()
       });
       session.updatedAt = nowIso();
       await SessionsStore.saveSession(session);
@@ -149,13 +150,13 @@ router.post('/', async (req, res) => {
     // Step 6: Return success response to client
     // ========================================
     return res.json({ ok: true, output });
-    
+
   } catch (e) {
     // Handle any errors during API call
     console.error('[chat] Error:', e);
-    return res.status(500).json({ 
-      ok: false, 
-      error: String(e) 
+    return res.status(500).json({
+      ok: false,
+      error: String(e)
     });
   }
 });

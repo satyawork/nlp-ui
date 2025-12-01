@@ -1,9 +1,9 @@
 {
   "apis": [
     {
-      "id": "api-1764239747480",
-      "name": "Llama-3-Groq-70B-Tool-Use",
-      "baseUrl": "http://127.0.0.1:8000/v1/completions",
+      "id": "api-1764304792696",
+      "name": "raj_system_new",
+      "baseUrl": "http://192.168.43.15:8080/chat",
       "headers": []
     }
   ]
