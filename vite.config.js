@@ -8,5 +8,9 @@ export default defineConfig({
     proxy: {
       '/api': 'http://localhost:3000'
     }
+  },
+  preview: {
+    host:true, // or 0.0.0.0
+    port: 5077
   }
 })

@@ -1,26 +1,39 @@
 import React, { useState } from 'react';
 import FileUploader from './FileUploader';
+import CollectionsDropdown from './CollectionsDropdown';
 
 export default function ChatInput({ onSend }) {
   const [text, setText] = useState('');
   const [files, setFiles] = useState([]);
+  const [collection, setCollection] = useState('none');
 
   async function handleSend() {
+    // if no text and no files, do nothing
     if (!text.trim() && files.length === 0) return;
-    
-    const message = text.trim();
+
+    const rawMessage = text.trim();
     const fileList = [...files];
-    
-    // Clear textarea immediately
+    const selectedCollection = collection === 'none' ? null : collection;
+
+    // Build the message to send (append suffix only when a collection is selected)
+    let sentMessage = rawMessage;
+    if (selectedCollection) {
+      // If rawMessage is empty, this will still send the suffix so the receiver knows the source
+      sentMessage = rawMessage ? `${rawMessage} from ${selectedCollection}` : `from ${selectedCollection}`;
+    }
+
+    // Clear textarea and files immediately (UI remains clean)
     setText('');
     setFiles([]);
-    
-    // Send to parent with cleared state
-    await onSend(message, fileList);
+    setCollection('none');
+
+    // Send to parent with the message that includes the background suffix when appropriate
+    // Parent signature: onSend(message, files, collection)
+    await onSend(sentMessage, fileList, selectedCollection);
   }
 
   function onKeyDown(e) {
-    // Send on Enter key (plain or Ctrl/Cmd+Enter)
+    // Send on Enter key (without Shift)
     if (e.key === 'Enter' && !e.shiftKey) {
       e.preventDefault();
       handleSend();
@@ -28,15 +41,22 @@ export default function ChatInput({ onSend }) {
   }
 
   return (
-    <div className="chat-input">
-      <div className="input-container">
+    <div className="chat-input" style={{ display: 'flex', gap: 8, alignItems: 'center' }}>
+      <div className="input-container" style={{ flex: 1, display: 'flex', gap: 8, alignItems: 'center' }}>
         <FileUploader onUploaded={(meta) => setFiles(prev => [...prev, meta])} />
+        <CollectionsDropdown
+          apiUrl="http://localhost:9000/collections"
+          value={collection}
+          onChange={(v) => setCollection(v)}
+          includeNone={true}
+        />
         <textarea
           className="chat-textarea"
           value={text}
           onChange={e => setText(e.target.value)}
           onKeyDown={onKeyDown}
           placeholder="Type your message..."
+          style={{ flex: 1, minHeight: 48, padding: 8, borderRadius: 6 }}
         />
       </div>
       <button

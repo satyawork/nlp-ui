@@ -1013,3 +1013,44 @@ body {
 .message-bubble { padding: 10px 14px; border-radius: 10px; }
 .message.user .message-bubble { background: var(--user-bg); }
 .message.assistant .message-bubble { background: var(--assistant-bg); }
+
+
+.collection-dropdown-wrap {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+/* your dropdown styling (keeps previous look) */
+.collection-dropdown {
+  padding: 6px 10px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  background: #fff;
+  color: inherit;
+  font-size: 14px;
+  outline: none;
+}
+
+/* focus match */
+.collection-dropdown:focus {
+  border-color: #999;
+}
+
+/* refresh button small, neutral */
+.collection-dropdown-refresh {
+  background: transparent;
+  border: none;
+  padding: 4px 6px;
+  cursor: pointer;
+  font-size: 14px;
+  line-height: 1;
+  color: inherit;
+  border-radius: 4px;
+}
+
+/* hover/focus for accessibility */
+.collection-dropdown-refresh:hover,
+.collection-dropdown-refresh:focus {
+  background: rgba(0,0,0,0.05);
+}
