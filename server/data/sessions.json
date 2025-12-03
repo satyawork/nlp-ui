@@ -166,10 +166,46 @@
           "role": "assistant",
           "text": "{\"response\":\"Hi! How can I assist you today?\"}",
           "ts": "2025-12-01T09:37:36.064Z"
+        },
+        {
+          "id": "m-1764769392796",
+          "role": "user",
+          "text": "what can you tell em",
+          "ts": "2025-12-03T13:43:12.796Z"
+        },
+        {
+          "id": "m-1764769445592",
+          "role": "user",
+          "text": "what can you tell me",
+          "ts": "2025-12-03T13:44:05.592Z"
+        },
+        {
+          "id": "m-1764769473984",
+          "role": "user",
+          "text": "what can you tell me",
+          "ts": "2025-12-03T13:44:33.984Z"
+        },
+        {
+          "id": "m-1764769477047",
+          "role": "assistant",
+          "text": "I'm here to help! What do you need assistance with?",
+          "ts": "2025-12-03T13:44:37.047Z"
+        },
+        {
+          "id": "m-1764769490511",
+          "role": "user",
+          "text": "give summary from sample2",
+          "ts": "2025-12-03T13:44:50.511Z"
+        },
+        {
+          "id": "m-1764769518917",
+          "role": "assistant",
+          "text": "🎯 GROQ TOOL AUTO-EXECUTION SUCCESS\nQuery: \"give summary from sample2\"\nSelected Tool: get_summary\nParameters: {'file_name': 'sample2'}\nResult: Operational Briefing:\n\n1. **Tanks**: Eight tanks located at Quetta (GR 11223344556677) on May 1st, moving south at a speed of 25 km/h.\n\n2. **Infantry Soldiers**: Fifteen soldiers equipped with rifles and grenades near Peshawar as of May 3rd, 17:20.\n\n3. **Armored Vehicles**: Seven armored vehicles positioned in Rahim Yar Khan on May 7th, traveling at a speed of 45 km/h, equipped with cannons.\n\n4. **Patrol Unit**: Ten members conducting patrol operations in Dera Ghazi Khan on May 9th, moving southwest at an unspecified time, 06:50.\n\nNote: Additional data for certain assets is currently unavailable or not applicable.\n\nGroq Model Response:\n{\n  \"function\": \"get_summary\",\n  \"arguments\": {\n    \"file_name\": \"sample2\"\n  }\n}",
+          "ts": "2025-12-03T13:45:18.917Z"
         }
       ],
       "createdAt": "2025-11-29T08:32:07.228Z",
-      "updatedAt": "2025-12-01T09:37:36.064Z"
+      "updatedAt": "2025-12-03T13:45:18.917Z"
     }
   ]
 }

@@ -3,7 +3,7 @@
     {
       "id": "api-1764304792696",
       "name": "raj_system_new",
-      "baseUrl": "http://192.168.43.15:8080/chat",
+      "baseUrl": "http://127.0.0.1:8080/chat",
       "headers": []
     }
   ]

@@ -72,16 +72,6 @@ export default function CollectionsDropdown({
         ))}
       </select>
 
-      {/* small refresh button — unobtrusive, accessible */}
-      <button
-        type="button"
-        className="collection-dropdown-refresh"
-        onClick={fetchCollections}
-        aria-label="Refresh collections"
-        title="Refresh collections"
-      >
-        ⟳
-      </button>
     </div>
   );
 }
