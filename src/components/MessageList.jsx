@@ -1,5 +1,8 @@
 import React, { useEffect, useRef } from 'react';
 // import './MessageList.css'; // new styles for loader
+import ReactMarkdown from 'react-markdown';
+import remarkGfm from 'remark-gfm';
+
 
 export default function MessageList({ messages }) {
   const endRef = useRef(null);
@@ -19,11 +22,14 @@ export default function MessageList({ messages }) {
                 <div className="loader-dots" aria-hidden>
                   <span></span><span></span><span></span>
                 </div>
-                <div className="loader-label">Thinking</div>
               </div>
             ) : (
               <>
-                <div className="message-body">{m.text}</div>
+                <div className="message-body markdown-body">
+                  <ReactMarkdown remarkPlugins={[remarkGfm]}>
+                    {m.text}
+                  </ReactMarkdown>
+                </div>
                 <div className="message-ts">{ new Date(m.ts).toLocaleTimeString() }</div>
               </>
             )}

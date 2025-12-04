@@ -1,87 +1,39 @@
-import React, { useEffect, useState, useRef } from 'react';
+// src/components/CollectionsDropdown.jsx
+import React from 'react';
 
-export default function CollectionsDropdown({
-  apiUrl = '/collections',
-  value,
-  onChange,
-  includeNone = true,
-}) {
-  const [collections, setCollections] = useState([]);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
-  const abortRef = useRef(null);
+export default function CollectionsDropdown({ apiUrl, value, onChange, includeNone = true }) {
+  // This component expects parent to fetch and pass collections (we also fetch in ChatInput),
+  // but to keep it self-contained we will fetch here too on mount so it can be reused.
+  const [items, setItems] = React.useState([]);
 
-  async function fetchCollections() {
-    // Abort previous request if any
-    if (abortRef.current) {
-      abortRef.current.abort();
-    }
-    const controller = new AbortController();
-    abortRef.current = controller;
-
-    setLoading(true);
-    setError(null);
-    try {
-      const res = await fetch(apiUrl, {
-        headers: { accept: 'application/json' },
-        signal: controller.signal,
-      });
-      if (!res.ok) throw new Error(`Status ${res.status}`);
-      const data = await res.json();
-      setCollections(Array.isArray(data) ? data : []);
-    } catch (err) {
-      if (err.name !== 'AbortError') {
-        setError(String(err));
-        setCollections([]);
+  React.useEffect(() => {
+    let cancelled = false;
+    async function fetchCollections() {
+      try {
+        const res = await fetch(apiUrl);
+        if (!res.ok) throw new Error('fetch failed');
+        const data = await res.json();
+        if (!cancelled && Array.isArray(data)) setItems(data);
+      } catch (e) {
+        console.warn('CollectionsDropdown fetch error', e);
+        if (!cancelled) setItems([]);
       }
-    } finally {
-      setLoading(false);
-      abortRef.current = null;
     }
-  }
-
-  useEffect(() => {
-    // initial load
     fetchCollections();
-    // cleanup abort on unmount
-    return () => {
-      if (abortRef.current) abortRef.current.abort();
-    };
+    return () => { cancelled = true; };
   }, [apiUrl]);
 
-  const handleFocusOrClick = () => {
-    // refresh when dropdown receives focus / user clicks it
-    fetchCollections();
-  };
-
   return (
-    <div className="collection-dropdown-wrap">
-      <select
-        className="collection-dropdown"
-        value={value ?? 'none'}
-        onChange={(e) => onChange?.(e.target.value)}
-        onFocus={handleFocusOrClick}
-        onClick={handleFocusOrClick}
-        aria-label="Select collection"
-      >
-        {includeNone && <option value="none">none</option>}
-        {loading && <option value="loading">Loading...</option>}
-        {!loading && error && <option value="none">Error loading</option>}
-        {!loading && !error && collections.map(c => (
-          <option key={c} value={c}>{c}</option>
-        ))}
-      </select>
-
-      {/* small refresh button — unobtrusive, accessible */}
-      <button
-        type="button"
-        className="collection-dropdown-refresh"
-        onClick={fetchCollections}
-        aria-label="Refresh collections"
-        title="Refresh collections"
-      >
-        ⟳
-      </button>
-    </div>
+    <select
+      value={value}
+      onChange={(e) => onChange(e.target.value)}
+      style={{ padding: 6, borderRadius: 6 }}
+      aria-label="Select collection"
+    >
+      {includeNone && <option value="none">No collection</option>}
+      {items.map((it) => (
+        <option key={it} value={it}>{it}</option>
+      ))}
+    </select>
   );
 }

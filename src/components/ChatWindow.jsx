@@ -15,7 +15,7 @@ export default function ChatWindow() {
 
   return (
     <div className="chat-container">
-      <ChatHeader current={current} settings={settings} />
+      <ChatHeader/>
       <div className="message-list-container">
         <MessageList messages={sessionData?.messages || []} loading={loading} />
       </div>

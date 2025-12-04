@@ -1054,3 +1054,23 @@ body {
 .collection-dropdown-refresh:focus {
   background: rgba(0,0,0,0.05);
 }
+.header-top {
+  border-bottom:  solid var(--border)
+}
+
+.markdown-body p {
+  margin: 0 0 6px;
+}
+
+.markdown-body pre {
+  background: #f2f2f2;
+  padding: 8px;
+  border-radius: 6px;
+  overflow-x: auto;
+}
+
+.markdown-body code {
+  background: #eee;
+  padding: 2px 4px;
+  border-radius: 4px;
+}

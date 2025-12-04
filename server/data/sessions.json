@@ -172,10 +172,769 @@
           "role": "user",
           "text": "hi",
           "ts": "2025-12-03T14:13:52.869Z"
+        },
+        {
+          "id": "m-1764826185763",
+          "role": "user",
+          "text": "hi",
+          "ts": "2025-12-04T05:29:45.763Z"
+        },
+        {
+          "id": "m-1764826188803",
+          "role": "assistant",
+          "text": "Hello! How can I assist you today?",
+          "ts": "2025-12-04T05:29:48.803Z"
+        },
+        {
+          "id": "m-1764826387560",
+          "role": "user",
+          "text": "what can you tell me",
+          "ts": "2025-12-04T05:33:07.560Z"
+        },
+        {
+          "id": "m-1764826387931",
+          "role": "assistant",
+          "text": "I'm here to help! What do you need assistance with?",
+          "ts": "2025-12-04T05:33:07.931Z"
+        },
+        {
+          "id": "m-1764826415787",
+          "role": "user",
+          "text": "calculate the area of circle with radius 10",
+          "ts": "2025-12-04T05:33:35.787Z"
+        },
+        {
+          "id": "m-1764826417777",
+          "role": "assistant",
+          "text": "🎯 GROQ TOOL AUTO-EXECUTION SUCCESS\nQuery: \"calculate the area of circle with radius 10\"\nSelected Tool: calculate_area\nParameters: {'shape': 'circle', 'radius': 10}\nResult: 🔴 Circle area (radius=10) = 314.1593 square units\n\nGroq Model Response:\n{\n  \"function\": \"calculate_area\",\n  \"arguments\": {\n    \"shape\": \"circle\",\n    \"radius\": 10\n  }\n}",
+          "ts": "2025-12-04T05:33:37.777Z"
+        },
+        {
+          "id": "m-1764826440818",
+          "role": "user",
+          "text": "summarize this document from PDF_Table",
+          "ts": "2025-12-04T05:34:00.818Z"
+        },
+        {
+          "id": "m-1764826441768",
+          "role": "assistant",
+          "text": "I'm sorry, but I don't have the capability to directly interact with PDF files. However, if you provide me with specific information or questions related to the document, I can help you analyze it using available tools. Could you please specify what you need?",
+          "ts": "2025-12-04T05:34:01.768Z"
+        },
+        {
+          "id": "m-1764826466474",
+          "role": "user",
+          "text": "genrate summary from PDF_Table from PDF_Table",
+          "ts": "2025-12-04T05:34:26.474Z"
+        },
+        {
+          "id": "m-1764826467002",
+          "role": "assistant",
+          "text": "I can help you generate a summary from the PDF file. Could you please provide me with the name of the PDF file?",
+          "ts": "2025-12-04T05:34:27.002Z"
+        },
+        {
+          "id": "m-1764826480731",
+          "role": "user",
+          "text": "genrate summary",
+          "ts": "2025-12-04T05:34:40.731Z"
+        },
+        {
+          "id": "m-1764826481243",
+          "role": "assistant",
+          "text": "I'm sorry, but I don't have enough information to generate a summary. Could you please provide more context or details?",
+          "ts": "2025-12-04T05:34:41.243Z"
+        },
+        {
+          "id": "m-1764826490984",
+          "role": "user",
+          "text": "give me summary from PDF_Table",
+          "ts": "2025-12-04T05:34:50.984Z"
+        },
+        {
+          "id": "m-1764826491605",
+          "role": "assistant",
+          "text": "I'm sorry, but I don't have access to a specific file named \"PDF_Table\". Could you provide more context or clarify what you're looking for?",
+          "ts": "2025-12-04T05:34:51.605Z"
+        },
+        {
+          "id": "m-1764826522699",
+          "role": "user",
+          "text": "give me summary from sample2",
+          "ts": "2025-12-04T05:35:22.699Z"
+        },
+        {
+          "id": "m-1764826552197",
+          "role": "assistant",
+          "text": "🎯 GROQ TOOL AUTO-EXECUTION SUCCESS\nQuery: \"give me summary from sample2\"\nSelected Tool: get_summary\nParameters: {'file_name': 'sample2'}\nResult: **Operational Briefing**\n\n1. **Tanks**: Eight tanks are located at Quetta GR 11223344556677 as of May 1st, moving south at a speed of 25 km/h.\n\n2. **Infantry Soldiers**: A unit of fifteen infantry soldiers equipped with rifles and grenades is positioned near Peshawar on May 3rd at 17:20.\n\n3. **Helicopters**: Two helicopters are operating near Sargodha as of May 5th, flying at an altitude of 800 meters and armed with machine guns.\n\n4. **Armored Vehicles**: Seven armored vehicles equipped with cannons are stationed in Rahim Yar Khan on May 7th, traveling at a speed of 45 km/h.\n\n5. **Patrol Unit**: A patrol unit consisting of ten members is located in Dera Ghazi Khan as of May 9th, moving southwest and armed with AK-47s.\n\n**End of Briefing**\n\nGroq Model Response:\n{\n  \"function\": \"get_summary\",\n  \"arguments\": {\n    \"file_name\": \"sample2\"\n  }\n}",
+          "ts": "2025-12-04T05:35:52.197Z"
+        },
+        {
+          "id": "m-1764828585248",
+          "role": "user",
+          "text": "give me summary from sample2",
+          "ts": "2025-12-04T06:09:45.248Z"
+        },
+        {
+          "id": "m-1764828620535",
+          "role": "assistant",
+          "text": "🎯 GROQ TOOL AUTO-EXECUTION SUCCESS\nQuery: \"give me summary from sample2\"\nSelected Tool: get_summary\nParameters: {'file_name': 'sample2'}\nResult: Operational Briefing:\n\n1. **Tanks in Quetta**:\n   - Quantity: 8\n   - Location: Quetta (GR 11223344556677)\n   - Date/Time: May 1, 2023, at 13:45\n   - Status: Moving southward at a speed of 25 km/h.\n\n2. **Infantry near Peshawar**:\n   - Quantity: 15 soldiers\n   - Location: Near Peshawar\n   - Date/Time: May 3, 2023, at 17:20\n   - Equipment: Equipped with rifles and grenades.\n\n3. **Armored Vehicles in Rahim Yar Khan**:\n   - Quantity: 7 vehicles\n   - Location: Rahim Yar Khan\n   - Date/Time: May 7, 2023, at 11:00\n   - Status: Traveling at a speed of 45 km/h, equipped with cannons.\n\n4. **Patrol near Dera Ghazi Khan**:\n   - Quantity: 10 personnel\n   - Location: Near Dera Ghazi Khan\n   - Date/Time: May 9, 2023, at 06:50\n   - Direction: Headed southwest, armed with AK-47s. \n\nCurrent operations involve multiple units across different regions, equipped and moving as per the mission requirements. Further updates will follow as needed.\n\nGroq Model Response:\n{\n  \"function\": \"get_summary\",\n  \"arguments\": {\n    \"file_name\": \"sample2\"\n  }\n}",
+          "ts": "2025-12-04T06:10:20.535Z"
+        },
+        {
+          "id": "m-1764828646006",
+          "role": "user",
+          "text": "give me summary from sample2",
+          "ts": "2025-12-04T06:10:46.006Z"
+        },
+        {
+          "id": "m-1764828678423",
+          "role": "assistant",
+          "text": "🎯 GROQ TOOL AUTO-EXECUTION SUCCESS\nQuery: \"give me summary from sample2\"\nSelected Tool: get_summary\nParameters: {'file_name': 'sample2'}\nResult: **Operational Briefing:**\n\n1. **Tanks:**  \n   - Quantity: 8\n   - Location: Quetta GR 11223344556677\n   - Date & Time: May 1, 2023, at 13:45\n   - Moving South at a speed of 25 km/h.\n\n2. **Infantry Soldiers:**  \n   - Quantity: 15\n   - Equipped with rifles and grenades.\n   - Located in Peshawar on May 3, 2023, at 17:20.\n\n3. **Helicopters:**  \n   - Quantity: 2\n   - Location: Sargodha GR 4433322100998\n   - Date & Time: May 5, 2023, at 14:40\n   - Operating at an altitude of 800 meters and armed with machine guns.\n\n4. **Armored Vehicles:**  \n   - Quantity: 7\n   - Location: Rahim Yar Khan\n   - Date & Time: May 7, 2023, at 11:00\n   - Traveling at a speed of 45 km/h, equipped with cannons.\n\n5. **Patrol Soldiers:**  \n   - Quantity: 10\n   - Direction: South-West\n   - Located in Dera Ghazi Khan on May 9, 2023, at 06:50.\n\n**Summary:**  \n- A group of tanks is advancing south from Quetta.\n- Infantry units are stationed with light weaponry in Peshawar.\n- Helicopters have been deployed from Sargodha, maintaining a high-altitude presence.\n- Armored vehicles are on the move near Rahim Yar Khan, equipped for combat.\n- A patrol of soldiers is moving southwest from Dera Ghazi Khan.\n\nGroq Model Response:\n{\n  \"function\": \"get_summary\",\n  \"arguments\": {\n    \"file_name\": \"sample2\"\n  }\n}",
+          "ts": "2025-12-04T06:11:18.423Z"
+        },
+        {
+          "id": "m-1764836932141",
+          "role": "user",
+          "text": "give summary of @PDF_Only_Text",
+          "ts": "2025-12-04T08:28:52.141Z"
+        },
+        {
+          "id": "m-1764836964116",
+          "role": "user",
+          "text": "give summary of PDF_Only_Text",
+          "ts": "2025-12-04T08:29:24.116Z"
+        },
+        {
+          "id": "m-1764836999172",
+          "role": "user",
+          "text": "what can you tell me",
+          "ts": "2025-12-04T08:29:59.172Z"
+        },
+        {
+          "id": "m-1764837031048",
+          "role": "user",
+          "text": "what can you tell me",
+          "ts": "2025-12-04T08:30:31.048Z"
+        },
+        {
+          "id": "m-1764837034145",
+          "role": "assistant",
+          "text": "I'm here to help! What specific information are you looking for?",
+          "ts": "2025-12-04T08:30:34.145Z"
+        },
+        {
+          "id": "m-1764837039172",
+          "role": "user",
+          "text": "give me summary from sample2",
+          "ts": "2025-12-04T08:30:39.172Z"
+        },
+        {
+          "id": "m-1764837067991",
+          "role": "assistant",
+          "text": "🎯 GROQ TOOL AUTO-EXECUTION SUCCESS\nQuery: \"give me summary from sample2\"\nSelected Tool: get_summary\nParameters: {'file_name': 'sample2'}\nResult: **Operational Briefing**\n\n1. **Tanks**: Eight tanks are positioned in Quetta at grid reference 11223344556677 as of May 1st at 13:45, moving southward at a speed of 25 km/h.\n\n2. **Infantry Soldiers**: A group of fifteen infantry soldiers is located near Peshawar on May 3rd at 17:20, equipped with rifles and grenades.\n\n3. **Helicopters**: Two helicopters are stationed in Sargodha at grid reference 44332211009988 as of May 5th at 14:40, flying at an altitude of 800 meters armed with machine guns.\n\n4. **Armored Vehicles**: Seven armored vehicles are present in Rahim Yar Khan on May 7th at 11:00, traveling at a speed of 45 km/h, equipped with cannons.\n\n5. **Patrol**: A patrol consisting of ten members is operating in Dera Ghazi Khan as of May 9th at 06:50, heading southwest.\n\nGroq Model Response:\n{\n  \"function\": \"get_summary\",\n  \"arguments\": {\n    \"file_name\": \"sample2\"\n  }\n}",
+          "ts": "2025-12-04T08:31:07.991Z"
+        },
+        {
+          "id": "m-1764837269986",
+          "role": "user",
+          "text": "give area of circle with raduius 5 cm",
+          "ts": "2025-12-04T08:34:29.986Z"
+        },
+        {
+          "id": "m-1764837271825",
+          "role": "assistant",
+          "text": "🎯 GROQ TOOL AUTO-EXECUTION SUCCESS\nQuery: \"give area of circle with raduius 5 cm\"\nSelected Tool: calculate_area\nParameters: {'shape': 'circle', 'radius': 5}\nResult: 🔴 Circle area (radius=5) = 78.5398 square units\n\nGroq Model Response:\n{\n  \"function\": \"calculate_area\",\n  \"arguments\": {\n    \"shape\": \"circle\",\n    \"radius\": 5\n  }\n}",
+          "ts": "2025-12-04T08:34:31.825Z"
+        },
+        {
+          "id": "m-1764837298449",
+          "role": "user",
+          "text": "calculate the area of circle with radius 1",
+          "ts": "2025-12-04T08:34:58.449Z"
+        },
+        {
+          "id": "m-1764837300438",
+          "role": "assistant",
+          "text": "🎯 GROQ TOOL AUTO-EXECUTION SUCCESS\nQuery: \"calculate the area of circle with radius 1\"\nSelected Tool: calculate_area\nParameters: {'shape': 'circle', 'radius': 1}\nResult: 🔴 Circle area (radius=1) = 3.1416 square units\n\nGroq Model Response:\n{\n  \"function\": \"calculate_area\",\n  \"arguments\": {\n    \"shape\": \"circle\",\n    \"radius\": 1\n  }\n}",
+          "ts": "2025-12-04T08:35:00.438Z"
+        },
+        {
+          "id": "m-1764837465262",
+          "role": "user",
+          "text": "@PDF_Only_Text give me the summary of crititical information from PDF_Only_Text",
+          "ts": "2025-12-04T08:37:45.262Z"
+        },
+        {
+          "id": "m-1764837466182",
+          "role": "assistant",
+          "text": "I'm sorry, but I don't have access to external files or PDFs. However, if you provide me with specific text or data from the PDF, I can help analyze it for you. Could you please share the relevant information?",
+          "ts": "2025-12-04T08:37:46.182Z"
+        },
+        {
+          "id": "m-1764837488293",
+          "role": "user",
+          "text": "give me the summary @PDF_Only_Text",
+          "ts": "2025-12-04T08:38:08.293Z"
+        },
+        {
+          "id": "m-1764837489006",
+          "role": "assistant",
+          "text": "I can help you with that. To provide a summary for your PDF file, I'll need to use the \"get_summary\" tool. Could you please provide me with the file name?",
+          "ts": "2025-12-04T08:38:09.006Z"
+        },
+        {
+          "id": "m-1764837512872",
+          "role": "user",
+          "text": "give me summary from sample2",
+          "ts": "2025-12-04T08:38:32.872Z"
+        },
+        {
+          "id": "m-1764837544755",
+          "role": "assistant",
+          "text": "🎯 GROQ TOOL AUTO-EXECUTION SUCCESS\nQuery: \"give me summary from sample2\"\nSelected Tool: get_summary\nParameters: {'file_name': 'sample2'}\nResult: **Operational Briefing:**\n\n1. **Tanks**: A squadron of 8 tanks is located in Quetta (GR 11223344556677) as of May 1st at 13:45. They are moving southward at a speed of 25 km/h.\n\n2. **Infantry**: An infantry unit consisting of 15 personnel is stationed in Peshawar, equipped with rifles and grenades. The observation was recorded on May 3rd at 17:20.\n\n3. **Helicopters**: Two helicopters are based in Sargodha (GR 44332211009988) as of May 5th at 14:40. They are operating at an altitude of 800 meters and equipped with machine guns.\n\n4. **Armored Vehicles**: Seven armored vehicles are located in Rahim Yar Khan, recorded on May 7th at 11:00. These vehicles are moving at a speed of 45 km/h and are armed with cannons.\n\n5. **Patrol Unit**: A patrol consisting of 10 personnel is stationed in Dera Ghazi Khan as of May 9th at 06:50. The unit is equipped with AK-47s and moving in the south-west direction.\n\nGroq Model Response:\n{\n  \"function\": \"get_summary\",\n  \"arguments\": {\n    \"file_name\": \"sample2\"\n  }\n}",
+          "ts": "2025-12-04T08:39:04.755Z"
+        },
+        {
+          "id": "m-1764837546731",
+          "role": "user",
+          "text": "give me summary from PDF_Only_Text",
+          "ts": "2025-12-04T08:39:06.731Z"
+        },
+        {
+          "id": "m-1764837547394",
+          "role": "assistant",
+          "text": "I can help you with that. I will use the \"get_summary\" tool to find a summary for your PDF file. Could you please provide me with the sensor ID?",
+          "ts": "2025-12-04T08:39:07.394Z"
+        },
+        {
+          "id": "m-1764837572337",
+          "role": "user",
+          "text": "give me summary from PDF_Table",
+          "ts": "2025-12-04T08:39:32.337Z"
+        },
+        {
+          "id": "m-1764837572984",
+          "role": "assistant",
+          "text": "I'm sorry, but I don't have access to a specific file named \"PDF_Table\". Could you provide more context or clarify what you're looking for?",
+          "ts": "2025-12-04T08:39:32.984Z"
+        },
+        {
+          "id": "m-1764837633105",
+          "role": "user",
+          "text": "give summary of PDF_Only_Text",
+          "ts": "2025-12-04T08:40:33.105Z"
+        },
+        {
+          "id": "m-1764837633749",
+          "role": "assistant",
+          "text": "I can help you with that. Could you please provide me with more details about the PDF file? For example, what specific information are you looking for in the summary?",
+          "ts": "2025-12-04T08:40:33.749Z"
+        },
+        {
+          "id": "m-1764837698209",
+          "role": "user",
+          "text": "give summary of @PDF_Only_Text",
+          "ts": "2025-12-04T08:41:38.209Z"
+        },
+        {
+          "id": "m-1764837698850",
+          "role": "assistant",
+          "text": "I'm sorry, but I don't have enough information to provide a summary for @PDF_Only_Text. Could you please provide more details or context about the PDF?",
+          "ts": "2025-12-04T08:41:38.850Z"
+        },
+        {
+          "id": "m-1764837706195",
+          "role": "user",
+          "text": "give summary of PDF_Only_Text",
+          "ts": "2025-12-04T08:41:46.195Z"
+        },
+        {
+          "id": "m-1764837706834",
+          "role": "assistant",
+          "text": "I can help you with that. Could you please provide me with more details about the PDF file? For example, what specific information are you looking for in the summary?",
+          "ts": "2025-12-04T08:41:46.834Z"
+        },
+        {
+          "id": "m-1764844288022",
+          "role": "user",
+          "text": "hwayddv from test",
+          "ts": "2025-12-04T10:31:28.022Z"
+        },
+        {
+          "id": "m-1764844291098",
+          "role": "assistant",
+          "text": "I'm here to help! What do you need assistance with?",
+          "ts": "2025-12-04T10:31:31.098Z"
+        },
+        {
+          "id": "m-1764844412240",
+          "role": "user",
+          "text": "give me summay of PDF_Only_Text",
+          "ts": "2025-12-04T10:33:32.240Z"
+        },
+        {
+          "id": "m-1764844412965",
+          "role": "assistant",
+          "text": "I can help you with that. To provide a summary for \"PDF_Only_Text\", I'll use the \"get_summary\" tool. Could you please confirm if this is correct?",
+          "ts": "2025-12-04T10:33:32.965Z"
+        },
+        {
+          "id": "m-1764844430731",
+          "role": "user",
+          "text": "give summay of sample2",
+          "ts": "2025-12-04T10:33:50.731Z"
+        },
+        {
+          "id": "m-1764844432242",
+          "role": "assistant",
+          "text": "🎯 GROQ TOOL AUTO-EXECUTION SUCCESS\nQuery: \"give summay of sample2\"\nSelected Tool: get_summary\nParameters: {'file_name': 'sample2'}\nResult: ❌ Error: No file found named 'sample2' with extensions ['.docx', '.doc', '.pdf', '.txt', '.rtf'] in /home/crl/PoC_MCP_Tools_groq_llama_ollama/document\n\nGroq Model Response:\n{\n  \"function\": \"get_summary\",\n  \"arguments\": {\n    \"file_name\": \"sample2\"\n  }\n}",
+          "ts": "2025-12-04T10:33:52.242Z"
+        },
+        {
+          "id": "m-1764844794874",
+          "role": "user",
+          "text": "what can you tell me",
+          "ts": "2025-12-04T10:39:54.874Z"
+        },
+        {
+          "id": "m-1764844797974",
+          "role": "assistant",
+          "text": "I'm here to help! What do you need assistance with?",
+          "ts": "2025-12-04T10:39:57.974Z"
+        },
+        {
+          "id": "m-1764845607671",
+          "role": "user",
+          "text": "give me summary of @20251203151630_sample2",
+          "ts": "2025-12-04T10:53:27.671Z"
+        },
+        {
+          "id": "m-1764845612256",
+          "role": "assistant",
+          "text": "🎯 GROQ TOOL AUTO-EXECUTION SUCCESS\nQuery: \"give me summary of @20251203151630_sample2\"\nSelected Tool: get_summary\nParameters: {'file_name': '@20251203151630_sample2'}\nResult: ❌ Error: No file found named '@20251203151630_sample2' with extensions ['.docx', '.doc', '.pdf', '.txt', '.rtf'] in /home/crl/PoC_MCP_Tools_groq_llama_ollama/document\n\nGroq Model Response:\n{\n  \"function\": \"get_summary\",\n  \"arguments\": {\n    \"file_name\": \"@20251203151630_sample2\"\n  }\n}",
+          "ts": "2025-12-04T10:53:32.256Z"
+        },
+        {
+          "id": "m-1764845625435",
+          "role": "user",
+          "text": "give me summay of PDF_Only_Text",
+          "ts": "2025-12-04T10:53:45.435Z"
+        },
+        {
+          "id": "m-1764845626097",
+          "role": "assistant",
+          "text": "I can help you with that. Could you please provide more details about the PDF file? For example, its name or any specific text you're interested in.",
+          "ts": "2025-12-04T10:53:46.097Z"
+        },
+        {
+          "id": "m-1764845681053",
+          "role": "user",
+          "text": "give me summary from sample2",
+          "ts": "2025-12-04T10:54:41.054Z"
+        },
+        {
+          "id": "m-1764845682628",
+          "role": "assistant",
+          "text": "🎯 GROQ TOOL AUTO-EXECUTION SUCCESS\nQuery: \"give me summary from sample2\"\nSelected Tool: get_summary\nParameters: {'file_name': 'sample2'}\nResult: ❌ Error: No file found named 'sample2' with extensions ['.docx', '.doc', '.pdf', '.txt', '.rtf'] in /home/crl/PoC_MCP_Tools_groq_llama_ollama/document\n\nGroq Model Response:\n{\n  \"function\": \"get_summary\",\n  \"arguments\": {\n    \"file_name\": \"sample2\"\n  }\n}",
+          "ts": "2025-12-04T10:54:42.628Z"
+        },
+        {
+          "id": "m-1764846003565",
+          "role": "user",
+          "text": "give summary from drone",
+          "ts": "2025-12-04T11:00:03.565Z"
+        },
+        {
+          "id": "m-1764846007033",
+          "role": "assistant",
+          "text": "I'm sorry, but I don't have enough information to provide a summary for the drone. Could you please specify what kind of summary you are looking for? For example, a technical summary or an operational summary?",
+          "ts": "2025-12-04T11:00:07.033Z"
+        },
+        {
+          "id": "m-1764846826614",
+          "role": "user",
+          "text": "give summary of drone",
+          "ts": "2025-12-04T11:13:46.614Z"
+        },
+        {
+          "id": "m-1764846829849",
+          "role": "assistant",
+          "text": "I'm sorry, but I don't have enough information to provide a summary for a drone. Could you please provide more details about the drone?",
+          "ts": "2025-12-04T11:13:49.849Z"
+        },
+        {
+          "id": "m-1764846841766",
+          "role": "user",
+          "text": "give summary of newdocs",
+          "ts": "2025-12-04T11:14:01.766Z"
+        },
+        {
+          "id": "m-1764846842359",
+          "role": "assistant",
+          "text": "I'm sorry, but I don't have enough information to provide a summary for \"newdocs\". Could you please specify what exactly you need help with?",
+          "ts": "2025-12-04T11:14:02.359Z"
+        },
+        {
+          "id": "m-1764846974176",
+          "role": "user",
+          "text": "give summary of @dronePIBIntro",
+          "ts": "2025-12-04T11:16:14.176Z"
+        },
+        {
+          "id": "m-1764846974898",
+          "role": "assistant",
+          "text": "I'm sorry, but I don't have enough information to provide a summary for @dronePIBIntro. Could you please provide more context or details about what you're looking for?",
+          "ts": "2025-12-04T11:16:14.898Z"
+        },
+        {
+          "id": "m-1764846990085",
+          "role": "user",
+          "text": "give summary of dronePIBIntro",
+          "ts": "2025-12-04T11:16:30.085Z"
+        },
+        {
+          "id": "m-1764846990782",
+          "role": "assistant",
+          "text": "I'm sorry, but I don't have enough information to provide a summary for \"dronePIBIntro\". Could you please provide more context or details about what you're looking for?",
+          "ts": "2025-12-04T11:16:30.782Z"
+        },
+        {
+          "id": "m-1764847293262",
+          "role": "user",
+          "text": "give me summary from sample2",
+          "ts": "2025-12-04T11:21:33.262Z"
+        },
+        {
+          "id": "m-1764847294929",
+          "role": "assistant",
+          "text": "🎯 GROQ TOOL AUTO-EXECUTION SUCCESS\nQuery: \"give me summary from sample2\"\nSelected Tool: get_summary\nParameters: {'file_name': 'sample2'}\nResult: ❌ Error: No file found named 'sample2' with extensions ['.docx', '.doc', '.pdf', '.txt', '.rtf'] in /home/crl/PoC_MCP_Tools_groq_llama_ollama/document\n\nGroq Model Response:\n{\n  \"function\": \"get_summary\",\n  \"arguments\": {\n    \"file_name\": \"sample2\"\n  }\n}",
+          "ts": "2025-12-04T11:21:34.929Z"
+        },
+        {
+          "id": "m-1764847554512",
+          "role": "user",
+          "text": "finde answer from collection sample2",
+          "ts": "2025-12-04T11:25:54.512Z"
+        },
+        {
+          "id": "m-1764847555262",
+          "role": "assistant",
+          "text": "I'm sorry, but I don't have enough information to help you find an answer from collection sample2. Could you please provide more context or details about what you're looking for?",
+          "ts": "2025-12-04T11:25:55.262Z"
+        },
+        {
+          "id": "m-1764848060475",
+          "role": "user",
+          "text": "what is in this document from collection sample2",
+          "ts": "2025-12-04T11:34:20.475Z"
+        },
+        {
+          "id": "m-1764848071547",
+          "role": "assistant",
+          "text": "{\"model\":\"phi4:14b\",\"created_at\":\"2025-12-04T11:34:31.538710714Z\",\"message\":{\"role\":\"assistant\",\"content\":\"The document provides a series of observations regarding military activities and deployments:\\n\\n1. **Machine Guns**: Mentioned at the start without specific details.\\n2. **Artillery Battery**:\\n   - Comprising 5 guns deployed at coordinates 29.654, 71.234.\\n   - Faced West on May 6, 2023, at 15:30.\\n\\n3. **Armored Vehicles**:\\n   - 7 armored vehicles observed in Rahim Yar Khan on May 7, 2023, at 11:00.\\n   - Equipped with cannons and traveling at a speed of 45 km/h.\\n\\n4. **Radar Installation**:\\n   - Located at coordinates 30.432, 72.876.\\n   - Became active on May 8, 2023, at 19:15.\\n   - Noted to have heavy guard presence.\\n\\n5. **Patrol Soldiers**:\\n   - A group of 10 soldiers near Dera Ghazi Khan carrying AK-47s observed on May 9, 2023, at 06:50.\\n   - Moving in a South-West direction.\\n\\n6. **Supply Convoy**:\\n   - Consisting of 20 trucks located at coordinates 31.876, 70.456.\\n   - Documented moving North on May 10, 2023, at 10:25 with a speed of 55 km/h.\\n\\nThese entries detail the presence and movement of various military assets over consecutive days in different locations.\"},\"done_reason\":\"stop\",\"done\":true,\"total_duration\":10977165508,\"load_duration\":2827386013,\"prompt_eval_count\":664,\"prompt_eval_duration\":433897145,\"eval_count\":310,\"eval_duration\":7712395972}",
+          "ts": "2025-12-04T11:34:31.547Z"
+        },
+        {
+          "id": "m-1764848207595",
+          "role": "user",
+          "text": "what is in this document] from collection dronePIBIntro",
+          "ts": "2025-12-04T11:36:47.595Z"
+        },
+        {
+          "id": "m-1764848217166",
+          "role": "assistant",
+          "text": "{\"model\":\"phi4:14b\",\"created_at\":\"2025-12-04T11:36:57.160431819Z\",\"message\":{\"role\":\"assistant\",\"content\":\"The document discusses regulations and guidelines related to drones and unmanned aircraft systems (UAS) in India. Key points include:\\n\\n1. **Eligibility for Development and Testing**: \\n   - Entities eligible for drone development and testing include research and development organizations, educational institutions recognized by government bodies, startups recognized by the Department for Promotion of Industry and Internal Trade, authorized testing entities, and unmanned aircraft system manufacturers with a GST Identification Number.\\n\\n2. **Regulation of Imports**:\\n   - The import of drones is regulated concerning control modules, ground control stations, communications systems, cameras, sensors, safety systems, etc.\\n   - The list of eligible components for imports may be expanded as drone technology evolves.\\n\\n3. **Incentive Schemes**:\\n   - Coverage includes developers of drone-related IT products.\\n   - The government has widened the incentive scheme to include MSMEs and startups.\\n\\n4. **Authorizations and Licenses**:\\n   - Required authorizations include a unique prototype identification number, certificates for manufacturing, airworthiness, conformance, maintenance, import clearance, and more.\\n   - Number of forms reduced from 25 to 5 and types of fees from 72 to 4, with fees delinked from drone size.\\n\\n5. **Digital Sky Platform**:\\n   - Offers online registration for pilots, devices, service providers, and NPNT (no permission, no take-off) clearances.\\n   - Provides instant online clearances for operators for every flight.\\n\\n6. **Government Role**:\\n   - The government acts as an enabler rather than a regulator in the drone sector, fostering demand for drones with programs like Drone Spardha, exhibitions, and public awareness initiatives.\\n\\nThe document underscores efforts to streamline processes, reduce bureaucratic hurdles, and promote innovation in the drone industry while ensuring safety and compliance.\"},\"done_reason\":\"stop\",\"done\":true,\"total_duration\":9491960538,\"load_duration\":61663020,\"prompt_eval_count\":733,\"prompt_eval_duration\":233951156,\"eval_count\":369,\"eval_duration\":9190600996}",
+          "ts": "2025-12-04T11:36:57.166Z"
+        },
+        {
+          "id": "m-1764848319990",
+          "role": "user",
+          "text": "what is in this document] from collection dronePIBIntro",
+          "ts": "2025-12-04T11:38:39.990Z"
+        },
+        {
+          "id": "m-1764848331572",
+          "role": "assistant",
+          "text": "The document provides information on regulations and initiatives related to unmanned aircraft systems (UAS), commonly known as drones, in India. Here are the key points:\n\n1. **Eligibility for Drone Use**:\n   - Entities eligible for drone development and testing include research and development organizations, educational institutions, startups recognized by the Department for Promotion of Industry and Internal Trade, authorized testing entities, and unmanned aircraft system manufacturers with a GST Identification Number.\n\n2. **Regulated Import**:\n   - The import of drones includes control modules, ground control stations, communications systems (like radio frequency, transponders), cameras, sensors, spraying systems, 'Detect and Avoid' systems, emergency recovery systems, trackers, and other components critical for safety and security.\n   - The government may expand the list of eligible drone components as technology evolves.\n\n3. **Incentives**:\n   - Eligibility norms have been widened to include developers of drone-related IT products under an incentive scheme for MSMEs and startups.\n\n4. **Authorizations and Fees**:\n   - Types of authorizations required: authorization number, unique prototype identification number, certificates of manufacturing and airworthiness, maintenance, import clearance, acceptance of existing drones, operator permit, R&D organization authorization, student remote pilot licence, etc.\n   - The process has been simplified by reducing the number of forms from 25 to 5 and types of fees from 72 to 4. Fees have been reduced to nominal levels.\n\n5. **Digital Sky Platform**:\n   - The platform facilitates online registration for pilots, devices, service providers, and implements a NPNT (no permission, no take-off) system.\n   - It provides instant clearances for operators for every flight.\n\n6. **Government Role and Initiatives**:\n   - The government aims to act as an enabler rather than a regulator, encouraging the use of drones for public good.\n   - Events such as drone exhibitions, demonstrations, and interactions have been organized to promote drone technology among various communities including students, farmers, and businesses.\n\n7. **Public Awareness Programs**:\n   - Emphasis on mass awareness programs highlighting drones' potential benefits for society.\n\nThese points reflect the Indian government's efforts to regulate, incentivize, and facilitate the growth of drone technology within the country.",
+          "ts": "2025-12-04T11:38:51.572Z"
+        },
+        {
+          "id": "m-1764848697716",
+          "role": "user",
+          "text": "what are zones from collection dronePIBIntro",
+          "ts": "2025-12-04T11:44:57.716Z"
+        },
+        {
+          "id": "m-1764848707487",
+          "role": "assistant",
+          "text": "Under India's Drone Rules 2021, Indian airspace is classified into three categories for unmanned aircraft system (UAS) operations:\n\n1. **Red Zone**: This zone includes areas where UAS operations are highly restricted. Operations are only permitted with permission from the Central Government. It encompasses airspace above land areas or territorial waters of India and any specified installations beyond territorial waters.\n\n2. **Yellow Zone**: In this zone, UAS operations require authorization from the concerned air traffic control authority. The Yellow Zone includes:\n   - Airspace above 400 feet (or 120 meters) in designated Green Zones.\n   - Airspace above 200 feet (or 60 meters) between 8 to 12 kilometers from an operational airport's perimeter.\n\n3. **Green Zone**: This is the least restrictive zone, where UAS operations do not require permission for drones with an all-up weight up to 500 kg. It includes airspace up to:\n   - 400 feet (or 120 meters) that hasn't been designated as a Red or Yellow Zone.\n   - 200 feet above areas located between 8-12 kilometers from the perimeter of an operational airport.\n\nThe boundaries for these zones can be modified over time, and operators are advised to check the latest airspace map on the Digital Sky Platform before any drone operation.",
+          "ts": "2025-12-04T11:45:07.487Z"
+        },
+        {
+          "id": "m-1764849580952",
+          "role": "user",
+          "text": "give summary of newdocs",
+          "ts": "2025-12-04T11:59:40.952Z"
+        },
+        {
+          "id": "m-1764849583674",
+          "role": "assistant",
+          "text": "I'm sorry, but I don't have enough information to provide a summary for \"newdocs\". Could you please specify what exactly you need help with?",
+          "ts": "2025-12-04T11:59:43.674Z"
+        },
+        {
+          "id": "m-1764849603207",
+          "role": "user",
+          "text": "give summary from sample2",
+          "ts": "2025-12-04T12:00:03.207Z"
+        },
+        {
+          "id": "m-1764849604951",
+          "role": "assistant",
+          "text": "🎯 GROQ TOOL AUTO-EXECUTION SUCCESS\nQuery: \"give summary from sample2\"\nSelected Tool: get_summary\nParameters: {'file_name': 'sample2'}\nResult: ❌ Error: No file found named 'sample2' with extensions ['.docx', '.doc', '.pdf', '.txt', '.rtf'] in /home/crl/PoC_MCP_Tools_groq_llama_ollama/document\n\nGroq Model Response:\n{\n  \"function\": \"get_summary\",\n  \"arguments\": {\n    \"file_name\": \"sample2\"\n  }\n}",
+          "ts": "2025-12-04T12:00:04.951Z"
+        },
+        {
+          "id": "m-1764849641218",
+          "role": "user",
+          "text": "give summary from dronePIBIntro",
+          "ts": "2025-12-04T12:00:41.218Z"
+        },
+        {
+          "id": "m-1764849641734",
+          "role": "assistant",
+          "text": "I can help you with that. Could you please provide me with the file name you're interested in?",
+          "ts": "2025-12-04T12:00:41.734Z"
+        },
+        {
+          "id": "m-1764849650980",
+          "role": "user",
+          "text": "give summary from sample2",
+          "ts": "2025-12-04T12:00:50.980Z"
+        },
+        {
+          "id": "m-1764849651620",
+          "role": "assistant",
+          "text": "I'm sorry, but I don't have enough information to generate a summary for \"sample2\". Could you provide more context or details about what you're looking for?",
+          "ts": "2025-12-04T12:00:51.620Z"
+        },
+        {
+          "id": "m-1764849664379",
+          "role": "user",
+          "text": "give summary from sample2",
+          "ts": "2025-12-04T12:01:04.379Z"
+        },
+        {
+          "id": "m-1764849666115",
+          "role": "assistant",
+          "text": "🎯 GROQ TOOL AUTO-EXECUTION SUCCESS\nQuery: \"give summary from sample2\"\nSelected Tool: get_summary\nParameters: {'file_name': 'sample2'}\nResult: ❌ Error: No file found named 'sample2' with extensions ['.docx', '.doc', '.pdf', '.txt', '.rtf'] in /home/crl/PoC_MCP_Tools_groq_llama_ollama/document\n\nGroq Model Response:\n{\n  \"function\": \"get_summary\",\n  \"arguments\": {\n    \"file_name\": \"sample2\"\n  }\n}",
+          "ts": "2025-12-04T12:01:06.115Z"
+        },
+        {
+          "id": "m-1764849682309",
+          "role": "user",
+          "text": "give summary from sample2",
+          "ts": "2025-12-04T12:01:22.309Z"
+        },
+        {
+          "id": "m-1764849684130",
+          "role": "assistant",
+          "text": "🎯 GROQ TOOL AUTO-EXECUTION SUCCESS\nQuery: \"give summary from sample2\"\nSelected Tool: get_summary\nParameters: {'file_name': 'sample2'}\nResult: ❌ Error: No file found named 'sample2' with extensions ['.docx', '.doc', '.pdf', '.txt', '.rtf'] in /home/crl/PoC_MCP_Tools_groq_llama_ollama/document\n\nGroq Model Response:\n{\n  \"function\": \"get_summary\",\n  \"arguments\": {\n    \"file_name\": \"sample2\"\n  }\n}",
+          "ts": "2025-12-04T12:01:24.130Z"
+        },
+        {
+          "id": "m-1764849732086",
+          "role": "user",
+          "text": "what is this document about from collection dronePIBIntro",
+          "ts": "2025-12-04T12:02:12.086Z"
+        },
+        {
+          "id": "m-1764849743117",
+          "role": "assistant",
+          "text": "The document discusses various initiatives and regulatory frameworks related to drones in India. It highlights a significant congregation of drone manufacturers, service providers, enthusiasts, and user communities that took place during an event featuring drone exhibitions, demonstrations, and interactions between industry players and users.\n\nKey points include:\n\n1. **Digital Sky Platform**: This platform facilitates online registration for pilots, devices, and service providers while implementing the NPNT (no permission, no take-off) system to manage drone operations more efficiently.\n\n2. **Government's Role as an Enabler**: The Union Civil Aviation Minister mentioned that under Prime Minister Narendra Modi's leadership, the government is focusing on enabling rather than regulating the drone sector. This involves creating a demand structure for drones and simplifying processes for authorization related to drones, such as reducing forms from 25 to 5 and types of fees from 72 to 4.\n\n3. **Reduction in Fees and Procedures**: The document details significant reductions in administrative fees and procedures required for various drone-related licenses and authorizations.\n\n4. **Research, Development, and Testing Exemptions**: Specific entities like R&D organizations, educational institutions recognized by the government, startups, authorized testing entities, and UAS manufacturers with GST identification are exempt from certain regulations when conducting research, development, and testing.\n\n5. **Import Regulations**: The import of unmanned aircraft systems is subject to specific regulations, although not detailed in this excerpt.\n\nOverall, the document outlines the efforts made by the Indian government to promote drone technology through regulatory simplifications and support for various stakeholders involved in drone operations and innovations.",
+          "ts": "2025-12-04T12:02:23.117Z"
+        },
+        {
+          "id": "m-1764849944347",
+          "role": "user",
+          "text": "give summary from sample2",
+          "ts": "2025-12-04T12:05:44.347Z"
+        },
+        {
+          "id": "m-1764849946167",
+          "role": "assistant",
+          "text": "🎯 GROQ TOOL AUTO-EXECUTION SUCCESS\nQuery: \"give summary from sample2\"\nSelected Tool: get_summary\nParameters: {'file_name': 'sample2'}\nResult: ❌ Error: No file found named 'sample2' with extensions ['.docx', '.doc', '.pdf', '.txt', '.rtf'] in /home/crl/PoC_MCP_Tools_groq_llama_ollama/document\n\nGroq Model Response:\n{\n  \"function\": \"get_summary\",\n  \"arguments\": {\n    \"file_name\": \"sample2\"\n  }\n}",
+          "ts": "2025-12-04T12:05:46.167Z"
+        },
+        {
+          "id": "m-1764849999858",
+          "role": "user",
+          "text": "give summary from sample2",
+          "ts": "2025-12-04T12:06:39.858Z"
+        },
+        {
+          "id": "m-1764850001678",
+          "role": "assistant",
+          "text": "🎯 GROQ TOOL AUTO-EXECUTION SUCCESS\nQuery: \"give summary from sample2\"\nSelected Tool: get_summary\nParameters: {'file_name': 'sample2'}\nResult: ❌ Error: No file found named 'sample2' with extensions ['.docx', '.doc', '.pdf', '.txt', '.rtf'] in /home/crl/PoC_MCP_Tools_groq_llama_ollama/document\n\nGroq Model Response:\n{\n  \"function\": \"get_summary\",\n  \"arguments\": {\n    \"file_name\": \"sample2\"\n  }\n}",
+          "ts": "2025-12-04T12:06:41.678Z"
+        },
+        {
+          "id": "m-1764850040503",
+          "role": "user",
+          "text": "give summary from sample2.docx",
+          "ts": "2025-12-04T12:07:20.503Z"
+        },
+        {
+          "id": "m-1764850042387",
+          "role": "assistant",
+          "text": "🎯 GROQ TOOL AUTO-EXECUTION SUCCESS\nQuery: \"give summary from sample2.docx\"\nSelected Tool: get_summary\nParameters: {'file_name': 'sample2.docx'}\nResult: ❌ Error: No file found named 'sample2.docx' with extensions ['.docx', '.doc', '.pdf', '.txt', '.rtf'] in /home/crl/PoC_MCP_Tools_groq_llama_ollama/document\n\nGroq Model Response:\n{\n  \"function\": \"get_summary\",\n  \"arguments\": {\n    \"file_name\": \"sample2.docx\"\n  }\n}",
+          "ts": "2025-12-04T12:07:22.387Z"
+        },
+        {
+          "id": "m-1764850101948",
+          "role": "user",
+          "text": "curl -X POST http://localhost:8080/chat -H \"Content-Type: application/json\" -d '{\"query\": \"paraphrase following [give me area of circle with radius 111111111111111.22]\"}'",
+          "ts": "2025-12-04T12:08:21.948Z"
+        },
+        {
+          "id": "m-1764850104040",
+          "role": "assistant",
+          "text": "🎯 GROQ TOOL AUTO-EXECUTION SUCCESS\nQuery: \"curl -X POST http://localhost:8080/chat -H \"Content-Type: application/json\" -d '{\"query\": \"paraphrase following [give me area of circle with radius 111111111111111.22]\"}'\"\nSelected Tool: calculate_area\nParameters: {'shape': 'circle', 'radius': 111111111111111.22}\nResult: 🔴 Circle area (radius=111111111111111.22) = 38785094488762952407165435904.0000 square units\n\nGroq Model Response:\n{\n  \"function\": \"calculate_area\",\n  \"arguments\": {\n    \"shape\": \"circle\",\n    \"radius\": 111111111111111.22\n  }\n}",
+          "ts": "2025-12-04T12:08:24.040Z"
+        },
+        {
+          "id": "m-1764850119935",
+          "role": "user",
+          "text": "araphrase following [give me area of circle with radius 111111111111111.22",
+          "ts": "2025-12-04T12:08:39.935Z"
+        },
+        {
+          "id": "m-1764850120475",
+          "role": "assistant",
+          "text": "I can help you calculate the area of a circle. Could you please provide me with the radius of the circle?",
+          "ts": "2025-12-04T12:08:40.475Z"
+        },
+        {
+          "id": "m-1764850586859",
+          "role": "user",
+          "text": "what is in this document from collection sample2",
+          "ts": "2025-12-04T12:16:26.859Z"
+        },
+        {
+          "id": "m-1764850599720",
+          "role": "assistant",
+          "text": "The document provides a detailed account of various military and reconnaissance activities occurring at different locations and times. Here's a summary:\n\n1. **May 1, 2023:** \n   - Eight tanks were stationed at Quetta (GR 11223344556677) at 13:45, moving south at 25 km/h.\n\n2. **May 2, 2023:** \n   - A UAV was conducting reconnaissance at an altitude of 4000 meters near coordinates 31.567, 72.789 at 09:00, equipped with a camera.\n\n3. **May 3, 2023:** \n   - Fifteen infantry soldiers were patrolling near Peshawar with rifles and grenades at 17:20.\n\n4. **May 4, 2023:** \n   - A convoy of 12 vehicles was moving east from coordinates 30.222, 70.999 at 08:10.\n\n5. **May 5, 2023:** \n   - Two helicopters were hovering at an altitude of 800 meters near Sargodha (GR 44332211009988) at 14:40, equipped with machine guns.\n\n6. **May 6, 2023:** \n   - An artillery battery consisting of five guns was deployed at coordinates 29.654, 71.234, facing west, at 15:30.\n\n7. **May 7, 2023:** \n   - Seven armored vehicles equipped with cannons were observed in Rahim Yar Khan at 11:00, traveling at a speed of 45 km/h.\n\n8. **May 8, 2023:** \n   - A radar installation became active at coordinates 30.432, 72.876 at 19:15, noted for its heavy guard presence.\n\n9. **May 9, 2023:** \n   - A patrol of ten soldiers carrying AK-47s was near Dera Ghazi Khan, moving south-west at 06:50.\n\n10. **May 10, 2023:** \n    - A supply convoy consisting of twenty trucks was moving north from coordinates 31.876, 70.456 at 10:25, traveling at a speed of 55 km/h.\n\nThe document details the deployment and activities involving various military units, vehicles, and equipment across different locations in Pakistan over several days in May 2023.",
+          "ts": "2025-12-04T12:16:39.720Z"
+        },
+        {
+          "id": "m-1764850642436",
+          "role": "user",
+          "text": "give summary from sample2",
+          "ts": "2025-12-04T12:17:22.436Z"
+        },
+        {
+          "id": "m-1764850646847",
+          "role": "assistant",
+          "text": "🎯 GROQ TOOL AUTO-EXECUTION SUCCESS\nQuery: \"give summary from sample2\"\nSelected Tool: get_summary\nParameters: {'file_name': 'sample2'}\nResult: ❌ Error: No file found named 'sample2' with extensions ['.docx', '.doc', '.pdf', '.txt', '.rtf'] in /home/crl/PoC_MCP_Tools_groq_llama_ollama/document\n\nGroq Model Response:\n{\n  \"function\": \"get_summary\",\n  \"arguments\": {\n    \"file_name\": \"sample2\"\n  }\n}",
+          "ts": "2025-12-04T12:17:26.847Z"
+        },
+        {
+          "id": "m-1764851390756",
+          "role": "user",
+          "text": "hi",
+          "ts": "2025-12-04T12:29:50.756Z"
+        },
+        {
+          "id": "m-1764851393510",
+          "role": "assistant",
+          "text": "Hello! How can I assist you today?",
+          "ts": "2025-12-04T12:29:53.510Z"
+        },
+        {
+          "id": "m-1764851403229",
+          "role": "user",
+          "text": "what is in this from collection sample2",
+          "ts": "2025-12-04T12:30:03.229Z"
+        },
+        {
+          "id": "m-1764851419062",
+          "role": "assistant",
+          "text": "Based on the context provided, here's a summary of the various military and logistical activities detailed:\n\n1. **Supply Convoy**: There are two entries for a supply convoy consisting of 20 trucks with coordinates at 31.876, 70.456 moving North on 2023-05-10 at 10:25, traveling at a speed of 55 km/h.\n\n2. **Artillery Battery**: An artillery battery with 5 guns is deployed at coordinates 29.654, 71.234 facing West, recorded on 2023-05-06 at 15:30.\n\n3. **Armored Vehicles**: Seven armored vehicles were observed in Rahim Yar Khan on 2023-05-07 at 11:00, moving at a speed of 45 km/h and equipped with cannons.\n\n4. **Radar Installation**: A radar installation is active since 2023-05-08 at 19:15 at coordinates 30.432, 72.876, noted to have heavy guard presence.\n\n5. **Patrol by Soldiers**: A patrol consisting of 10 soldiers was near Dera Ghazi Khan on 2023-05-09 at 06:50, carrying AK-47s and heading in the South-West direction.\n\n6. **Tanks in Quetta**: Eight tanks are stationed in Quetta with a grid reference (GR) of 11223344556677 on 2023-05-01 at 13:45, moving South at a speed of 25 km/h.\n\n7. **UAV for Reconnaissance**: A UAV is conducting reconnaissance from an altitude of 4000 meters at coordinates 31.567, 72.789 on 2023-05-02 at 09:00, equipped with a camera.\n\n8. **Infantry Soldiers**: Fifteen infantry soldiers were patrolling near Peshawar carrying rifles and grenades on 2023-05-03 at 17:20.\n\n9. **Convoy of Vehicles**: A convoy consisting of 12 vehicles was moving East from coordinates 30.222, 70.999 on 2023-05-04 at 08:10.\n\n10. **Helicopters near Sargodha**: Two helicopters were hovering at an altitude of 800 meters near Sargodha with a grid reference (GR) of 44332211009988 on 2023-05-05 at 14:40, equipped with machine guns.\n\nThese entries cover various military movements and installations across different locations and times.",
+          "ts": "2025-12-04T12:30:19.062Z"
+        },
+        {
+          "id": "m-1764851503547",
+          "role": "user",
+          "text": "give summary from sample2",
+          "ts": "2025-12-04T12:31:43.547Z"
+        },
+        {
+          "id": "m-1764851505257",
+          "role": "assistant",
+          "text": "🎯 GROQ TOOL AUTO-EXECUTION SUCCESS\nQuery: \"give summary from sample2\"\nSelected Tool: get_summary\nParameters: {'file_name': 'sample2'}\nResult: ❌ Error: No file found named 'sample2' with extensions ['.docx', '.doc', '.pdf', '.txt', '.rtf'] in /home/crl/PoC_MCP_Tools_groq_llama_ollama/document\n\nGroq Model Response:\n{\n  \"function\": \"get_summary\",\n  \"arguments\": {\n    \"file_name\": \"sample2\"\n  }\n}",
+          "ts": "2025-12-04T12:31:45.257Z"
         }
       ],
       "createdAt": "2025-11-29T08:32:07.228Z",
-      "updatedAt": "2025-12-03T14:13:52.869Z"
+      "updatedAt": "2025-12-04T12:31:45.257Z"
+    },
+    {
+      "id": "s_mirddsg1wsxd3k",
+      "name": "New chat",
+      "apiId": null,
+      "messages": [
+        {
+          "id": "m-1764848813710",
+          "role": "user",
+          "text": "give summary from collection sample2",
+          "ts": "2025-12-04T11:46:53.710Z"
+        },
+        {
+          "id": "m-1764848824642",
+          "role": "assistant",
+          "text": "Here is a summary based on the provided context:\n\n1. **Artillery Deployment**: An artillery battery of 5 guns was deployed at coordinates 29.654, 71.234 facing west on May 6, 2023, at 15:30.\n\n2. **Armored Vehicles Observation**: On May 7, 2023, at 11:00, 7 armored vehicles equipped with cannons were observed in Rahim Yar Khan moving at a speed of 45 km/h.\n\n3. **Radar Installation**: A radar installation located at coordinates 30.432, 72.876 became active on May 8, 2023, at 19:15 and was noted to have heavy guard presence.\n\n4. **Soldiers Patrol**: On May 9, 2023, at 06:50, a patrol of 10 soldiers carrying AK-47s was reported near Dera Ghazi Khan moving in the south-west direction.\n\n5. **Supply Convoy Movement**: A supply convoy consisting of 20 trucks was recorded at coordinates 31.876, 70.456 on May 10, 2023, at 10:25, traveling north at a speed of 55 km/h.\n\nAdditional Observations:\n- On May 1, 8 tanks were stationed in Quetta moving south with a speed of 25 km/h.\n- A UAV engaged in reconnaissance was flying at 4000m on May 2, 2023, equipped with cameras for surveillance.\n- A patrol by 15 infantry soldiers carrying rifles and grenades took place near Peshawar on May 3, 2023.\n- On May 4, a convoy of 12 vehicles was moving east through coordinates 30.222, 70.999.\n- Two helicopters armed with machine guns were hovering at an altitude of 800m near Sargodha on May 5, 2023.\n\nThis summary captures the various military movements and installations reported in the context from early to mid-May 2023.",
+          "ts": "2025-12-04T11:47:04.642Z"
+        },
+        {
+          "id": "m-1764848841032",
+          "role": "user",
+          "text": "give summary of sample2",
+          "ts": "2025-12-04T11:47:21.032Z"
+        },
+        {
+          "id": "m-1764848844403",
+          "role": "assistant",
+          "text": "I'm sorry, but I don't have enough information to provide a summary for \"sample2\". Could you please provide more context or details about what \"sample2\" refers to?",
+          "ts": "2025-12-04T11:47:24.403Z"
+        },
+        {
+          "id": "m-1764848895134",
+          "role": "user",
+          "text": "what is in this docs from collection sample2",
+          "ts": "2025-12-04T11:48:15.134Z"
+        },
+        {
+          "id": "m-1764848902219",
+          "role": "assistant",
+          "text": "The document provides a series of observations related to military and logistical activities recorded at specific times and locations:\n\n1. **Artillery Battery**: On May 6, 2023, at 15:30, an artillery battery comprising 5 guns was deployed at coordinates 29.654, 71.234, facing West.\n\n2. **Armored Vehicles**: Seven armored vehicles equipped with cannons were observed in Rahim Yar Khan on May 7, 2023, at 11:00, traveling at a speed of 45 km/h.\n\n3. **Radar Installation**: A radar installation was noted to be active since May 8, 2023, at 19:15, located at coordinates 30.432, 72.876. There was also mention of a heavy guard presence around it.\n\n4. **Patrol**: On May 9, 2023, at 06:50, a patrol comprising 10 soldiers carrying AK-47s was observed near Dera Ghazi Khan, heading in the South-West direction.\n\n5. **Supply Convoy**: A convoy of 20 trucks moving North on May 10, 2023, at 10:25 was recorded traveling at a speed of 55 km/h from coordinates 31.876, 70.456. \n\nThese entries detail military deployments and movements in various locations.",
+          "ts": "2025-12-04T11:48:22.219Z"
+        },
+        {
+          "id": "m-1764848937526",
+          "role": "user",
+          "text": "what can you tell me",
+          "ts": "2025-12-04T11:48:57.526Z"
+        },
+        {
+          "id": "m-1764848937918",
+          "role": "assistant",
+          "text": "I'm here to help! What specific information are you looking for?",
+          "ts": "2025-12-04T11:48:57.918Z"
+        }
+      ],
+      "createdAt": "2025-12-04T11:45:57.313Z",
+      "updatedAt": "2025-12-04T11:48:57.918Z"
     }
   ]
 }
