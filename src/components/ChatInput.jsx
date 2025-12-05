@@ -183,8 +183,8 @@ export default function ChatInput({ onSend }) {
   }, []);
 
   return (
-    <div className="chat-input" style={{ display: "flex", gap: 8, alignItems: "center" }}>
-      <div className="input-container" style={{ flex: 1, display: "flex", gap: 8, alignItems: "center" }}>
+    <div className="chat-input">
+      <div className="input-container">
         <FileUploader onUploaded={(meta) => setFiles(prev => [...prev, meta])} />
         {/* <CollectionsDropdown
           apiUrl="http://localhost:9000/collections"
@@ -193,7 +193,7 @@ export default function ChatInput({ onSend }) {
           includeNone={true}
         /> */}
 
-        <div style={{ position: "relative", flex: 1 }}>
+        <div className="textarea-wrapper">
           <textarea
             ref={textareaRef}
             className="chat-textarea"
@@ -201,40 +201,16 @@ export default function ChatInput({ onSend }) {
             onChange={handleTextareaChange}
             onKeyDown={handleKeyDown}
             placeholder="Type your message..."
-            style={{ width: "100%", minHeight: 48, padding: 8, borderRadius: 6, boxSizing: "border-box" }}
           />
 
           {showSuggestions && suggestions.length > 0 && (
-            <ul
-              role="listbox"
-              style={{
-                position: "absolute",
-                left: 8,
-                right: 8,
-                bottom: "100%",
-                marginBottom: 6,
-                maxHeight: 160,
-                overflowY: "auto",
-                background: "white",
-                border: "1px solid rgba(0,0,0,0.12)",
-                borderRadius: 6,
-                padding: 4,
-                boxShadow: "0 6px 18px rgba(0,0,0,0.08)",
-                zIndex: 50,
-                listStyle: "none"
-              }}
-            >
+            <ul className="suggestions-list" role="listbox">
               {suggestions.map((s, idx) => (
                 <li
                   key={s}
                   onMouseDown={(ev) => ev.preventDefault()}
                   onClick={() => handleSuggestionClick(idx)}
-                  style={{
-                    padding: "6px 10px",
-                    cursor: "pointer",
-                    borderRadius: 4,
-                    background: idx === selectedSuggestionIdx ? "rgba(0,0,0,0.06)" : "transparent"
-                  }}
+                  className={`suggestion-item ${idx === selectedSuggestionIdx ? 'selected' : ''}`}
                 >
                   {s}
                 </li>
@@ -249,10 +225,9 @@ export default function ChatInput({ onSend }) {
         onClick={handleSend}
         aria-label="Send message"
         title="Send (Enter)"
-        style={{ display: "inline-flex", alignItems: "center", justifyContent: "center", padding: 10, borderRadius: 6 }}
       >
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden>
-          <path fillRule="evenodd" d="M4.10514201,11.8070619 L2.74013818,2.2520351 L22.236068,12 L2.74013818,21.7479649 L4.10514201,12.1929381 L4.87689437,12 L4.10514201,11.8070619 Z M5.25986182,5.7479649 L5.89485799,10.1929381 L13.1231056,12 L5.89485799,13.8070619 L5.25986182,18.2520351 L17.763932,12 L5.25986182,5.7479649 Z" fill="currentColor"/>
+          <path fillRule="evenodd" d="M4.10514201,11.8070619 L2.74013818,2.2520351 L22.236068,12 L2.74013818,21.7479649 L4.10514201,12.1929381 L4.87689437,12 L4.10514201,11.8070619 Z M5.25986182,5.7479649 L5.89485799,10.1929381 L13.1231056,12 L5.89485799,13.8070619 L5.25986182,18.2520351 L17.763932,12 L5.25986182,5.7479649 Z" fill="currentColor" />
         </svg>
       </button>
     </div>

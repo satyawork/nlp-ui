@@ -3,46 +3,106 @@
 */
 
 :root {
-  /* Fallback values (dark by default) */
-  --bg: #0b1220;
-  --panel: #071022;
-  --panel-2: #020617;
-  --muted: #94a3b8;
-  --text: #e6eef8;
-  --accent: #7c3aed;
-  --message-user-bg: #0b2a2f;
-  --message-assistant-bg: #08142a;
-  --modal-bg: #071126;
-  --input-bg: #041022;
-  --border: rgba(255,255,255,0.04);
+  /* Common variables */
+  --font-family: Inter, system-ui, Arial, sans-serif;
 }
 
-/* Dark theme (explicit) */
+/* Dark theme (default/explicit) */
 [data-theme="dark"] {
   --bg: #0b1220;
   --panel: #071022;
   --panel-2: #020617;
   --muted: #94a3b8;
   --text: #e6eef8;
+  --text-secondary: #94a3b8;
   --accent: #7c3aed;
+  --accent-hover: #6d28d9;
+  
+  /* Message bubbles */
   --message-user-bg: #0b2a2f;
-  --message-assistant-bg: #08142a;
-  --modal-bg: #071126;
+  --message-user-text: #e6eef8;
+  --message-assistant-bg: #1e293b;
+  --message-assistant-text: #e2e8f0;
+  --message-assistant-border: #334155;
+  
+  /* Inputs & Forms */
   --input-bg: #041022;
-  --border: rgba(255,255,255,0.04);
+  --input-border: rgba(255,255,255,0.08);
+  --input-focus-border: #1e82e6;
+  --input-focus-ring: rgba(30, 130, 230, 0.15);
+  
+  /* Modals & Overlays */
+  --modal-bg: #071126;
+  --modal-overlay: rgba(2, 6, 23, 0.7);
+  
+  /* Borders & Separators */
+  --border: rgba(255,255,255,0.06);
+  --border-hover: rgba(255,255,255,0.1);
+  
+  /* Interactive Elements */
+  --hover-bg: rgba(255, 255, 255, 0.05);
+  --active-bg: rgba(30, 130, 230, 0.15);
+  --active-border: #1e82e6;
+  
+  /* Buttons */
+  --btn-text: #e6eef8;
+  --btn-bg: transparent;
+  --btn-border: rgba(255,255,255,0.1);
+  --btn-hover-bg: rgba(30, 130, 230, 0.1);
+  --btn-hover-border: #1e82e6;
+  --btn-hover-text: #1e82e6;
+  
+  /* Scrollbar */
+  --scrollbar-thumb: rgba(255, 255, 255, 0.1);
+  --scrollbar-thumb-hover: rgba(255, 255, 255, 0.2);
 }
 
 /* Light theme */
 [data-theme="light"] {
-  --bg: #f6f7fb;
+  --bg: #f8fafc;
   --panel: #ffffff;
-  --panel-2: #f4f6fb;
-  --muted: #475569;
-  --text: #0b1220;
-  --accent: #7c3aed; /* you can change accent for light theme if desired */
-  --message-user-bg: #e6f3f2;
-  --message-assistant-bg: #f1f5f9;
-  --modal-bg: #ffffff;
+  --panel-2: #f1f5f9;
+  --muted: #64748b;
+  --text: #0f172a;
+  --text-secondary: #475569;
+  --accent: #7c3aed;
+  --accent-hover: #6d28d9;
+  
+  /* Message bubbles */
+  --message-user-bg: #e0f2fe;
+  --message-user-text: #0c4a6e;
+  --message-assistant-bg: #ffffff;
+  --message-assistant-text: #0f172a;
+  --message-assistant-border: #e2e8f0;
+  
+  /* Inputs & Forms */
   --input-bg: #ffffff;
-  --border: rgba(10, 20, 30, 0.06);
+  --input-border: #cbd5e1;
+  --input-focus-border: #2563eb;
+  --input-focus-ring: rgba(37, 99, 235, 0.15);
+  
+  /* Modals & Overlays */
+  --modal-bg: #ffffff;
+  --modal-overlay: rgba(15, 23, 42, 0.4);
+  
+  /* Borders & Separators */
+  --border: #e2e8f0;
+  --border-hover: #cbd5e1;
+  
+  /* Interactive Elements */
+  --hover-bg: #f1f5f9;
+  --active-bg: #eff6ff;
+  --active-border: #2563eb;
+  
+  /* Buttons */
+  --btn-text: #334155;
+  --btn-bg: #ffffff;
+  --btn-border: #cbd5e1;
+  --btn-hover-bg: #eff6ff;
+  --btn-hover-border: #2563eb;
+  --btn-hover-text: #2563eb;
+  
+  /* Scrollbar */
+  --scrollbar-thumb: #cbd5e1;
+  --scrollbar-thumb-hover: #94a3b8;
 }
