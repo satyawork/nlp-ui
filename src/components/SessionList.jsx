@@ -47,9 +47,9 @@ export default function SessionList() {
   return (
     <div className="session-list-wrapper">
       <div>
-        <div className="session-list-header" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 8 }}>
+        <div className="session-list-header">
           <strong>Chats</strong>
-          <button onClick={() => createSession()}>+ New</button>
+          <button onClick={() => createSession()}>+</button>
         </div>
 
         <ul className="session-list">
@@ -63,8 +63,8 @@ export default function SessionList() {
                 className={`${isActive ? 'active' : ''} ${isRemoving ? 'removing' : ''}`}
                 onClick={() => !isEditing && setCurrent(s)}
               >
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: 8 }}>
-                  <div style={{ flex: 1 }}>
+                <div className="session-item-content">
+                  <div className="session-info">
                     {isEditing ? (
                       <input
                         value={editName}
@@ -73,12 +73,12 @@ export default function SessionList() {
                         autoFocus
                       />
                     ) : (
-                      <div className="session-name" style={{ fontWeight: isActive ? 600 : 500 }}>{s.name}</div>
+                      <div className="session-name">{s.name}</div>
                     )}
-                    <div className="session-meta" style={{ fontSize: 12, color: 'var(--muted)' }}>{ new Date(s.updatedAt || s.createdAt).toLocaleString() }</div>
+                    <div className="session-meta">{new Date(s.updatedAt || s.createdAt).toLocaleString()}</div>
                   </div>
 
-                  <div style={{ display: 'flex', gap: 6, marginLeft: 8 }}>
+                  <div className="session-actions">
                     {isEditing ? (
                       <>
                         <button onClick={(e) => { e.stopPropagation(); saveEdit(s.id); }}>Save</button>
@@ -99,8 +99,8 @@ export default function SessionList() {
       </div>
 
       {/* Settings button at bottom */}
-      <button 
-        className="settings-btn" 
+      <button
+        className="settings-btn"
         onClick={() => setShowApiSettings(true)}
         title="API Settings"
       >

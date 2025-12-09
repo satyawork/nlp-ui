@@ -27,7 +27,7 @@ export default function CollectionsDropdown({ apiUrl, value, onChange, includeNo
     <select
       value={value}
       onChange={(e) => onChange(e.target.value)}
-      style={{ padding: 6, borderRadius: 6 }}
+      className="collection-select"
       aria-label="Select collection"
     >
       {includeNone && <option value="none">No collection</option>}
