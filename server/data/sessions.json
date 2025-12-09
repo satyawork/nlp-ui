@@ -874,10 +874,88 @@
           "role": "assistant",
           "text": "🎯 GROQ TOOL AUTO-EXECUTION SUCCESS\nQuery: \"give summary from sample2\"\nSelected Tool: get_summary\nParameters: {'file_name': 'sample2'}\nResult: ❌ Error: No file found named 'sample2' with extensions ['.docx', '.doc', '.pdf', '.txt', '.rtf'] in /home/crl/PoC_MCP_Tools_groq_llama_ollama/document\n\nGroq Model Response:\n{\n  \"function\": \"get_summary\",\n  \"arguments\": {\n    \"file_name\": \"sample2\"\n  }\n}",
           "ts": "2025-12-04T12:31:45.257Z"
+        },
+        {
+          "id": "m-1765257385365",
+          "role": "user",
+          "text": "what is in this document from collection sample2",
+          "ts": "2025-12-09T05:16:25.365Z"
+        },
+        {
+          "id": "m-1765257400088",
+          "role": "assistant",
+          "text": "The document provides a detailed report of various military assets and activities over several days from May 1 to May 10, 2023. Here's a summary:\n\n1. **May 1, 2023**\n   - Eight tanks stationed at Quetta with the grid reference GR 11223344556677 at 13:45, moving south at 25 km/h.\n   - A UAV conducting reconnaissance at an altitude of 4000 meters with coordinates 31.567, 72.789 at 09:00.\n\n2. **May 2, 2023**\n   - Fifteen infantry soldiers patrolling near Peshawar equipped with rifles and grenades at 17:20.\n\n3. **May 3, 2023**\n   - A convoy of 12 vehicles moving eastward from coordinates 30.222, 70.999 at 08:10.\n\n4. **May 4, 2023**\n   - Two helicopters hovering at an altitude of 800 meters near Sargodha with grid reference GR 44332211009988 at 14:40, equipped with machine guns.\n\n5. **May 6, 2023**\n   - An artillery battery of five guns deployed facing west from coordinates 29.654, 71.234 at 15:30.\n\n6. **May 7, 2023**\n   - Seven armored vehicles observed in Rahim Yar Khan moving at a speed of 45 km/h with cannons at 11:00.\n\n7. **May 8, 2023**\n   - A radar installation active since 19:15 at coordinates 30.432, 72.876, noted to have a heavy guard presence.\n\n8. **May 9, 2023**\n   - Patrol of ten soldiers near Dera Ghazi Khan carrying AK-47s heading south-west at 06:50.\n\n9. **May 10, 2023**\n   - A supply convoy consisting of twenty trucks moving north from coordinates 31.876, 70.456 at a speed of 55 km/h at 10:25.\n\nThis document appears to be an intelligence or reconnaissance report detailing the movements and deployments of various military assets over a specific period in different locations.",
+          "ts": "2025-12-09T05:16:40.088Z"
+        },
+        {
+          "id": "m-1765257441007",
+          "role": "user",
+          "text": "give summary from sample2",
+          "ts": "2025-12-09T05:17:21.007Z"
+        },
+        {
+          "id": "m-1765257445504",
+          "role": "assistant",
+          "text": "🎯 GROQ TOOL AUTO-EXECUTION SUCCESS\nQuery: \"give summary from sample2\"\nSelected Tool: get_summary\nParameters: {'file_name': 'sample2'}\nResult: ❌ Error: No file found named 'sample2' with extensions ['.docx', '.doc', '.pdf', '.txt', '.rtf'] in /home/crl/PoC_MCP_Tools_groq_llama_ollama/document\n\nGroq Model Response:\n{\n  \"function\": \"get_summary\",\n  \"arguments\": {\n    \"file_name\": \"sample2\"\n  }\n}",
+          "ts": "2025-12-09T05:17:25.504Z"
+        },
+        {
+          "id": "m-1765257471749",
+          "role": "user",
+          "text": "from collection sample2",
+          "ts": "2025-12-09T05:17:51.749Z"
+        },
+        {
+          "id": "m-1765257478535",
+          "role": "user",
+          "text": "give summary from sample2",
+          "ts": "2025-12-09T05:17:58.535Z"
+        },
+        {
+          "id": "m-1765257480380",
+          "role": "assistant",
+          "text": "🎯 GROQ TOOL AUTO-EXECUTION SUCCESS\nQuery: \"give summary from sample2\"\nSelected Tool: get_summary\nParameters: {'file_name': 'sample2'}\nResult: ❌ Error: No file found named 'sample2' with extensions ['.docx', '.doc', '.pdf', '.txt', '.rtf'] in /home/crl/PoC_MCP_Tools_groq_llama_ollama/document\n\nGroq Model Response:\n{\n  \"function\": \"get_summary\",\n  \"arguments\": {\n    \"file_name\": \"sample2\"\n  }\n}",
+          "ts": "2025-12-09T05:18:00.380Z"
+        },
+        {
+          "id": "m-1765257507456",
+          "role": "user",
+          "text": "give summary from sample2",
+          "ts": "2025-12-09T05:18:27.456Z"
+        },
+        {
+          "id": "m-1765257509247",
+          "role": "assistant",
+          "text": "🎯 GROQ TOOL AUTO-EXECUTION SUCCESS\nQuery: \"give summary from sample2\"\nSelected Tool: get_summary\nParameters: {'file_name': 'sample2'}\nResult: ❌ Error: No file found named 'sample2' with extensions ['.docx', '.doc', '.pdf', '.txt', '.rtf'] in /home/crl/PoC_MCP_Tools_groq_llama_ollama/document\n\nGroq Model Response:\n{\n  \"function\": \"get_summary\",\n  \"arguments\": {\n    \"file_name\": \"sample2\"\n  }\n}",
+          "ts": "2025-12-09T05:18:29.247Z"
+        },
+        {
+          "id": "m-1765257532229",
+          "role": "user",
+          "text": "give summary from sample2",
+          "ts": "2025-12-09T05:18:52.229Z"
+        },
+        {
+          "id": "m-1765257534012",
+          "role": "assistant",
+          "text": "🎯 GROQ TOOL AUTO-EXECUTION SUCCESS\nQuery: \"give summary from sample2\"\nSelected Tool: get_summary\nParameters: {'file_name': 'sample2'}\nResult: ❌ Error: No file found named 'sample2' with extensions ['.docx', '.doc', '.pdf', '.txt', '.rtf'] in /home/crl/PoC_MCP_Tools_groq_llama_ollama/document\n\nGroq Model Response:\n{\n  \"function\": \"get_summary\",\n  \"arguments\": {\n    \"file_name\": \"sample2\"\n  }\n}",
+          "ts": "2025-12-09T05:18:54.012Z"
+        },
+        {
+          "id": "m-1765257905438",
+          "role": "user",
+          "text": "give summary from sample2",
+          "ts": "2025-12-09T05:25:05.438Z"
+        },
+        {
+          "id": "m-1765257909925",
+          "role": "assistant",
+          "text": "🎯 GROQ TOOL AUTO-EXECUTION SUCCESS\nQuery: \"give summary from sample2\"\nSelected Tool: get_summary\nParameters: {'file_name': 'sample2'}\nResult: ❌ Error: No file found named 'sample2' with extensions ['.docx', '.doc', '.pdf', '.txt', '.rtf'] in /home/crl/PoC_MCP_Tools_groq_llama_ollama/document\n\nGroq Model Response:\n{\n  \"function\": \"get_summary\",\n  \"arguments\": {\n    \"file_name\": \"sample2\"\n  }\n}",
+          "ts": "2025-12-09T05:25:09.925Z"
         }
       ],
       "createdAt": "2025-11-29T08:32:07.228Z",
-      "updatedAt": "2025-12-04T12:31:45.257Z"
+      "updatedAt": "2025-12-09T05:25:09.925Z"
     },
     {
       "id": "s_mirddsg1wsxd3k",
