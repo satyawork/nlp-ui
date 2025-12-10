@@ -449,7 +449,7 @@ body {
 }
 
 .send-btn {
-  background: linear-gradient(135deg, #1e82e6 0%, #0b6ed3 100%);
+  background: linear-gradient(135deg, #0096d9 0%, #0b6ed3 100%);
   color: #fff;
   border: none;
   box-shadow: 0 2px 8px rgba(30, 130, 230, 0.3);
@@ -570,7 +570,7 @@ body {
 
 .close-icon-btn:hover {
   background: rgba(30, 130, 230, 0.15);
-  border-color: #1e82e6;
+  border-color: #0096d9;
   transform: rotate(90deg);
 }
 
@@ -644,7 +644,7 @@ body {
 
 .api-item:hover {
   background: linear-gradient(135deg, rgba(30, 130, 230, 0.15) 0%, rgba(11, 110, 211, 0.08) 100%);
-  border-color: #1e82e6;
+  border-color: #0096d9;
   box-shadow: 0 8px 24px rgba(30, 130, 230, 0.2);
   transform: translateY(-2px);
 }
@@ -708,7 +708,7 @@ body {
 
 .edit-btn:hover {
   background: rgba(30, 130, 230, 0.15);
-  border-color: #1e82e6;
+  border-color: #0096d9;
   box-shadow: 0 4px 12px rgba(30, 130, 230, 0.2);
   transform: translateY(-1px);
 }
@@ -958,6 +958,11 @@ body {
 }
 .test-btn:active { transform: translateY(0); }
 
+/* Simple radio-like toggles used in integration modal */
+.radio-toggle { display: inline-flex; gap: 8px; }
+.radio-toggle button { padding: 8px 12px; border-radius: 6px; border: 1px solid var(--border); cursor: pointer; font-weight: 600; }
+.radio-toggle button[aria-checked='true'] { box-shadow: 0 6px 18px rgba(0,0,0,0.08); }
+
 /* ========== ADD API BUTTON ========== */
 .add-api-btn {
   width: 100%;
@@ -966,7 +971,7 @@ body {
   border: 2px dashed rgba(30, 130, 230, 0.5);
   background: linear-gradient(135deg, rgba(30, 130, 230, 0.1) 0%, rgba(11, 110, 211, 0.05) 100%);
   border-radius: 10px;
-  color: #1e82e6;
+  color: #0096d9;
   font-size: 13px;
   font-weight: 600;
   cursor: pointer;
@@ -991,7 +996,7 @@ body {
 
 .add-api-btn:hover {
   background: linear-gradient(135deg, rgba(30, 130, 230, 0.18) 0%, rgba(11, 110, 211, 0.12) 100%);
-  border-color: #1e82e6;
+  border-color: #0096d9;
   box-shadow: 0 8px 24px rgba(30, 130, 230, 0.2);
 }
 
@@ -1017,7 +1022,7 @@ body {
   background: rgba(30, 130, 230, 0.08);
   padding: 10px 12px;
   border-radius: 6px;
-  border-left: 3px solid #1e82e6;
+  border-left: 3px solid #0096d9;
   flex: 1;
 }
 
@@ -1039,7 +1044,7 @@ body {
 
 .close-btn:hover {
   background: rgba(30, 130, 230, 0.15);
-  border-color: #1e82e6;
+  border-color: #0096d9;
   transform: translateY(-1px);
   box-shadow: 0 4px 12px rgba(30, 130, 230, 0.15);
 }
@@ -1090,6 +1095,19 @@ body {
   }
 }
 
+/* Light-theme overrides for small controls that use blue tints to ensure contrast */
+[data-theme="light"] .edit-btn {
+  background: #0096d9; /* solid blue to stand out on light bg */
+  color: #ffffff;
+  border-color: #1769c6;
+}
+[data-theme="light"] .edit-btn:hover {
+  background: #1669c0;
+  border-color: #0f58a8;
+  box-shadow: 0 6px 18px rgba(30, 130, 230, 0.12);
+  transform: translateY(-1px);
+}
+
 /* loader bubble */
 .loading-message .message-bubble {
   background: linear-gradient(90deg, rgba(30, 130, 230, 0.06), rgba(11, 110, 211, 0.03));
@@ -1129,7 +1147,7 @@ body {
   display: inline-block;
   width: 6px;
   height: 6px;
-  background: #1e82e6;
+  background: #0096d9;
   border-radius: 50%;
   transform: translateY(0);
   animation: bounce 1s infinite ease-in-out;

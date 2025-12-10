@@ -1,18 +1,13 @@
 {
   "apis": [
     {
-      "id": "api-1765277070237",
-      "name": "RAG_UPLOAD",
-      "baseUrl": "http://127.0.0.1:9000",
+      "id": "api-1765349510927",
+      "name": "RAG_TOOL",
+      "baseUrl": "",
       "headers": [],
-      "endpoint": "/upload"
-    },
-    {
-      "id": "api-1765277209642",
-      "name": "RAG_COLLECTION",
-      "baseUrl": "http://localhost:9000",
-      "headers": [],
-      "endpoint": "/ask"
+      "ip": "http://127.0.0.1",
+      "port": "9000",
+      "endpoint": "upload"
     }
   ],
   "default": {

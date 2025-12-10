@@ -82,7 +82,7 @@ return (
                 💾 Save Default
             </button>
             <button onClick={handleTestDefault} className="test-btn">
-                🔎 Test Default
+                Test Default
             </button>
         </div>
     </div>

@@ -1,177 +1,148 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import ThemeToggle from '../contexts/ThemeToggle';
 import { useApiSettings } from '../contexts/ApiSettingsContext';
-import { useChatSessions } from '../contexts/ChatSessionsContext';
-import ApiSettingsDefault from './ApiSettingsDefault';
-import ApiSettingsList from './ApiSettingsList';
-import ApiSettingsForm from './ApiSettingsForm';
 
-/**
- * API Settings Modal
- * 
- * Allows users to:
- * - Add/Edit/Delete API configurations
- * - Configure API endpoint (baseUrl)
- * - Add custom headers (Authorization, etc.)
- * - Select active API (radio button)
- * 
- * Simplified design: Only requires name and baseUrl
- * All APIs are POST requests by default
- * 
- * 
- */
 export default function ApiSettingsModal({ onClose }) {
-  const { settings, saveSettings } = useApiSettings();
-  const { current, setCurrent } = useChatSessions();
-  const [local, setLocal] = useState(settings);
-  // local.default for global/default API settings
-  if (!local.default) local.default = { name: 'Default API', baseUrl: '', port: '', headers: [] };
-  const [editingId, setEditingId] = useState(null);
-  const [formData, setFormData] = useState({
-    id: '',
-    name: '',
-    baseUrl: '',
-    headers: []
-  });
+  const { settings, saveSettings, loading } = useApiSettings();
+  const [local, setLocal] = useState(null);
 
-  // Sync local state with global settings
-  React.useEffect(() => setLocal(settings), [settings]);
-
-  // Close modal on Escape key
   useEffect(() => {
-    function handleEsc(e) {
-      if (e.key === 'Escape') {
-        onClose();
-      }
-    }
-    window.addEventListener('keydown', handleEsc);
-    return () => window.removeEventListener('keydown', handleEsc);
+    const def = settings || {};
+    const initial = {
+      MCP_CONFIG: def.MCP_CONFIG || { uploadfile: 'http://localhost:8080/upload-file', chat: 'http://localhost:8080/chat' },
+      RAG_TOOL: def.RAG_TOOL || { enable: 'false', uploadfile: 'http://localhost:9000/upload', collectionList: 'http://localhost:9000/collections', askrag: 'http://localhost:9000/ask' },
+      SUMMARY_TOOL: def.SUMMARY_TOOL || { enable: 'false', getSummary: 'http://127.0.0.1:8003/upload/' }
+    };
+    setLocal(initial);
+  }, [settings]);
+
+  useEffect(() => {
+    function onKey(e) { if (e.key === 'Escape') onClose(); }
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
   }, [onClose]);
 
+  if (!local && loading) return null;
+  if (!local) return null;
 
-
-  /**
-   * Initialize new API form
-   */
-  function addApi() {
-    setFormData({
-      id: 'api-' + Date.now(),
-      name: '',
-      baseUrl: '',
-      headers: []
-    });
-    setEditingId('new');
+  function setEnable(tool, value) {
+    const copy = { ...local };
+    copy[tool] = { ...copy[tool], enable: value ? 'true' : 'false' };
+    setLocal(copy);
   }
 
-  const { testApi } = useApiSettings();
-
-  function handleSaveDefault() {
-    // validation: require either baseUrl or host+port; validate port
-    const d = local.default || {};
-    if (d.baseUrl && d.baseUrl.trim()) {
-      try { new URL(d.baseUrl); } catch (e) { alert('Invalid default Base URL'); return; }
-    } else if (!(d.host && d.host.trim()) && !(d.baseUrl && d.baseUrl.trim())) {
-      // if no baseUrl provided, allow host+port pattern via baseUrl field split (we use baseUrl as host here)
-      // require at least baseUrl or port to be present
-      if (!d.port || !String(d.port).trim()) { alert('Provide default base URL or port'); return; }
-    }
-    if (d.port && d.port.trim()) {
-      const p = Number(d.port);
-      if (!Number.isInteger(p) || p <= 0 || p > 65535) { alert('Invalid port number'); return; }
-    }
-    const newSettings = { ...local };
-    setLocal(newSettings);
-    saveSettings(newSettings);
-    alert('Default API saved');
+  function makeEditable(tool, key) {
+    setLocal({ ...local, _editing: { tool, key } });
   }
 
-  async function handleTestDefault() {
+  function stopEditing() {
+    const copy = { ...local };
+    delete copy._editing;
+    setLocal(copy);
+  }
+
+  function updateField(tool, key, value) {
+    const copy = { ...local };
+    copy[tool] = { ...copy[tool], [key]: value };
+    setLocal(copy);
+  }
+
+  async function handleSave() {
     try {
-      const res = await testApi({ config: local.default });
-      alert('Test result: ' + JSON.stringify(res));
+      await saveSettings(local);
+      alert('Settings saved');
+      onClose();
     } catch (e) {
-      alert('Test failed: ' + String(e));
-    }
-  }
-
-  /**
-   * Save or update API configuration
-   */
-  function handleSaveApi() {
-    // Validate required fields
-  if (!formData.name.trim()) { alert('Name is required'); return; }
-  if (!formData.baseUrl.trim() && !(formData.endpoint && formData.endpoint.trim())) { alert('Either Base URL or Endpoint path is required'); return; }
-
-    // Ensure baseUrl is a valid URL
-    if (formData.baseUrl && formData.baseUrl.trim()) {
-      try { new URL(formData.baseUrl); } catch (e) { alert('Invalid URL format'); return; }
-    }
-
-    // Add new or update existing API
-    const updated = editingId === 'new'
-      ? [...(local.apis || []), formData]
-      : (local.apis || []).map(a => a.id === formData.id ? formData : a);
-
-    // Persist changes
-    const newSettings = { ...local, apis: updated };
-    setLocal(newSettings);
-    saveSettings(newSettings);
-    
-    // Reset form
-    setEditingId(null);
-    setFormData({ id: '', name: '', baseUrl: '', headers: [] });
-  }
-
-  /**
-   * Delete API by ID
-   */
-  function handleDeleteApi(id) {
-    if (window.confirm('Delete this API configuration? This cannot be undone.')) {
-      const updated = (local.apis || []).filter(a => a.id !== id);
-      const newSettings = { ...local, apis: updated };
-      setLocal(newSettings);
-      saveSettings(newSettings);
+      alert('Save failed: ' + String(e));
     }
   }
 
   return (
     <div className="modal-overlay" onClick={onClose}>
       <div className="modal" onClick={(e) => e.stopPropagation()}>
-        {/* ========== HEADER ========== */}
         <div className="modal-header">
           <div className="modal-title">
-            <h3>🔌 API Configuration</h3>
+            <h3>Integration Configuration</h3>
+            <div className="modal-subtitle">Edit endpoints and enable/disable tools</div>
           </div>
           <div className="modal-controls">
             <ThemeToggle />
-            <button 
-              onClick={onClose} 
-              aria-label="Close settings" 
-              title="Close (Esc)"
-              className="close-icon-btn"
-            >
-              ✕
-            </button>
+            <button onClick={onClose} aria-label="Close settings" title="Close (Esc)" className="close-icon-btn">✕</button>
           </div>
         </div>
 
         <div className="modal-body">
-          <ApiSettingsDefault local={local} setLocal={setLocal} handleSaveDefault={handleSaveDefault} handleTestDefault={handleTestDefault} />
-          { (local?.apis || []).length > 0 && <ApiSettingsList local={local} setFormData={setFormData} setEditingId={setEditingId} handleDeleteApi={handleDeleteApi} testApi={testApi} /> }
-          { editingId && <ApiSettingsForm formData={formData} setFormData={setFormData} handleSaveApi={handleSaveApi} testApi={testApi} onCancel={() => setEditingId(null)} /> }
+          <div className="api-form">
+            <div className={`tool-row`}>{/* MCP row */}
+              <div className="col title">MCP</div>
+              <div className="col names">
+                <div>Upload</div>
+                <div>Chat</div>
+              </div>
+              <div className="col values">
+                <div>{local._editing?.tool === 'MCP_CONFIG' && local._editing?.key === 'uploadfile' ? (
+                    <input autoFocus onBlur={stopEditing} value={local.MCP_CONFIG.uploadfile} onChange={(e)=> updateField('MCP_CONFIG','uploadfile', e.target.value)} />
+                  ) : (
+                    <span onDoubleClick={()=> makeEditable('MCP_CONFIG','uploadfile')}>{local.MCP_CONFIG.uploadfile}</span>
+                  )}</div>
+                <div>{local._editing?.tool === 'MCP_CONFIG' && local._editing?.key === 'chat' ? (
+                    <input autoFocus onBlur={stopEditing} value={local.MCP_CONFIG.chat} onChange={(e)=> updateField('MCP_CONFIG','chat', e.target.value)} />
+                  ) : (
+                    <span onDoubleClick={()=> makeEditable('MCP_CONFIG','chat')}>{local.MCP_CONFIG.chat}</span>
+                  )}</div>
+              </div>
+            </div>
 
-          {!editingId && (
-            <button onClick={addApi} className="add-api-btn" title="Add new API configuration">➕ Add New API</button>
-          )}
-        </div>
+            <div className={`tool-row ${local.RAG_TOOL.enable === 'true' ? 'enabled' : 'disabled'}`}>{/* RAG row */}
+              <div className="col check"><input type="checkbox" checked={local.RAG_TOOL.enable === 'true'} onChange={(e)=> setEnable('RAG_TOOL', e.target.checked)} /></div>
+              <div className="col title">RAG</div>
+              <div className="col names">
+                <div>Upload</div>
+                <div>Collections</div>
+                <div>Ask</div>
+              </div>
+              <div className="col values">
+                <div>{local._editing?.tool === 'RAG_TOOL' && local._editing?.key === 'uploadfile' ? (
+                    <input autoFocus onBlur={stopEditing} value={local.RAG_TOOL.uploadfile} onChange={(e)=> updateField('RAG_TOOL','uploadfile', e.target.value)} />
+                  ) : (
+                    <span onDoubleClick={()=> makeEditable('RAG_TOOL','uploadfile')}>{local.RAG_TOOL.uploadfile}</span>
+                  )}</div>
+                <div>{local._editing?.tool === 'RAG_TOOL' && local._editing?.key === 'collectionList' ? (
+                    <input autoFocus onBlur={stopEditing} value={local.RAG_TOOL.collectionList} onChange={(e)=> updateField('RAG_TOOL','collectionList', e.target.value)} />
+                  ) : (
+                    <span onDoubleClick={()=> makeEditable('RAG_TOOL','collectionList')}>{local.RAG_TOOL.collectionList}</span>
+                  )}</div>
+                <div>{local._editing?.tool === 'RAG_TOOL' && local._editing?.key === 'askrag' ? (
+                    <input autoFocus onBlur={stopEditing} value={local.RAG_TOOL.askrag} onChange={(e)=> updateField('RAG_TOOL','askrag', e.target.value)} />
+                  ) : (
+                    <span onDoubleClick={()=> makeEditable('RAG_TOOL','askrag')}>{local.RAG_TOOL.askrag}</span>
+                  )}</div>
+              </div>
+            </div>
 
-        <div className="modal-footer">
-          <div className="modal-info">
-            <strong>Note:</strong> All APIs use POST requests. Headers are stored securely and not displayed after saving.
+            <div className={`tool-row ${local.SUMMARY_TOOL.enable === 'true' ? 'enabled' : 'disabled'}`}>{/* SUMMARY row */}
+              <div className="col check"><input type="checkbox" checked={local.SUMMARY_TOOL.enable === 'true'} onChange={(e)=> setEnable('SUMMARY_TOOL', e.target.checked)} /></div>
+              <div className="col title">SUMMARY</div>
+              <div className="col names">
+                <div>Get Summary</div>
+              </div>
+              <div className="col values">
+                <div>{local._editing?.tool === 'SUMMARY_TOOL' && local._editing?.key === 'getSummary' ? (
+                    <input autoFocus onBlur={stopEditing} value={local.SUMMARY_TOOL.getSummary} onChange={(e)=> updateField('SUMMARY_TOOL','getSummary', e.target.value)} />
+                  ) : (
+                    <span onDoubleClick={()=> makeEditable('SUMMARY_TOOL','getSummary')}>{local.SUMMARY_TOOL.getSummary}</span>
+                  )}</div>
+              </div>
+            </div>
+
+            <div className="form-actions">
+              <button className="save-btn" onClick={handleSave}>💾 Save</button>
+              <button className="cancel-btn" onClick={onClose}>Cancel</button>
+            </div>
           </div>
-          <button onClick={onClose} className="close-btn">Close</button>
         </div>
       </div>
     </div>
   );
 }
+          
