@@ -1,19 +1,16 @@
 {
-  "apis": [
-    {
-      "id": "api-1765349510927",
-      "name": "RAG_TOOL",
-      "baseUrl": "",
-      "headers": [],
-      "ip": "http://127.0.0.1",
-      "port": "9000",
-      "endpoint": "upload"
-    }
-  ],
-  "default": {
-    "name": "Default API",
-    "baseUrl": "http://127.0.0.1",
-    "port": "8080",
-    "headers": []
+  "MCP": {
+    "uploadfile": "http://localhost:8080/upload-file",
+    "chat": "http://localhost:8080/chat"
+  },
+  "RAG": {
+    "enable": "false",
+    "uploadfile": "http://localhost:9000/upload",
+    "collectionList": "http://localhost:9000/collections",
+    "askrag": "http://localhost:9000/ask"
+  },
+  "SUMMARY": {
+    "enable": "true",
+    "getSummary": "http://loaclhost:9900/upload"
   }
 }

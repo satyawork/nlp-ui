@@ -1,19 +1,21 @@
 import React, { useEffect, useState } from 'react';
 import ThemeToggle from '../contexts/ThemeToggle';
 import { useApiSettings } from '../contexts/ApiSettingsContext';
+import ApiEndpointRow from './ApiEndpointRow';
 
 export default function ApiSettingsModal({ onClose }) {
   const { settings, saveSettings, loading } = useApiSettings();
   const [local, setLocal] = useState(null);
 
   useEffect(() => {
-    const def = settings || {};
-    const initial = {
-      MCP_CONFIG: def.MCP_CONFIG || { uploadfile: 'http://localhost:8080/upload-file', chat: 'http://localhost:8080/chat' },
-      RAG_TOOL: def.RAG_TOOL || { enable: 'false', uploadfile: 'http://localhost:9000/upload', collectionList: 'http://localhost:9000/collections', askrag: 'http://localhost:9000/ask' },
-      SUMMARY_TOOL: def.SUMMARY_TOOL || { enable: 'false', getSummary: 'http://127.0.0.1:8003/upload/' }
-    };
-    setLocal(initial);
+    // Use settings exactly as provided by the backend. Do not inject frontend defaults.
+    // If backend returns null/undefined, we keep local null so UI can show nothing or a message.
+    if (settings) {
+      // shallow copy to allow local edits safely
+      setLocal(JSON.parse(JSON.stringify(settings)));
+    } else {
+      setLocal(null);
+    }
   }, [settings]);
 
   useEffect(() => {
@@ -22,8 +24,28 @@ export default function ApiSettingsModal({ onClose }) {
     return () => window.removeEventListener('keydown', onKey);
   }, [onClose]);
 
-  if (!local && loading) return null;
-  if (!local) return null;
+  if (loading) return null;
+  if (!local) {
+    return (
+      <div className="modal-overlay" onClick={onClose}>
+        <div className="modal" onClick={(e) => e.stopPropagation()}>
+          <div className="modal-header">
+            <div className="modal-title">
+              <h3>Integration Configuration</h3>
+              <div className="modal-subtitle">No configuration received from backend.</div>
+            </div>
+            <div className="modal-controls">
+              <ThemeToggle />
+              <button onClick={onClose} aria-label="Close settings" title="Close (Esc)" className="close-icon-btn">✕</button>
+            </div>
+          </div>
+          <div className="modal-body">
+            <div style={{ padding: 12, color: 'var(--muted)' }}>No settings available. Please check backend configuration.</div>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   function setEnable(tool, value) {
     const copy = { ...local };
@@ -63,7 +85,6 @@ export default function ApiSettingsModal({ onClose }) {
         <div className="modal-header">
           <div className="modal-title">
             <h3>Integration Configuration</h3>
-            <div className="modal-subtitle">Edit endpoints and enable/disable tools</div>
           </div>
           <div className="modal-controls">
             <ThemeToggle />
@@ -73,69 +94,37 @@ export default function ApiSettingsModal({ onClose }) {
 
         <div className="modal-body">
           <div className="api-form">
-            <div className={`tool-row`}>{/* MCP row */}
-              <div className="col title">MCP</div>
-              <div className="col names">
-                <div>Upload</div>
-                <div>Chat</div>
-              </div>
-              <div className="col values">
-                <div>{local._editing?.tool === 'MCP_CONFIG' && local._editing?.key === 'uploadfile' ? (
-                    <input autoFocus onBlur={stopEditing} value={local.MCP_CONFIG.uploadfile} onChange={(e)=> updateField('MCP_CONFIG','uploadfile', e.target.value)} />
-                  ) : (
-                    <span onDoubleClick={()=> makeEditable('MCP_CONFIG','uploadfile')}>{local.MCP_CONFIG.uploadfile}</span>
-                  )}</div>
-                <div>{local._editing?.tool === 'MCP_CONFIG' && local._editing?.key === 'chat' ? (
-                    <input autoFocus onBlur={stopEditing} value={local.MCP_CONFIG.chat} onChange={(e)=> updateField('MCP_CONFIG','chat', e.target.value)} />
-                  ) : (
-                    <span onDoubleClick={()=> makeEditable('MCP_CONFIG','chat')}>{local.MCP_CONFIG.chat}</span>
-                  )}</div>
-              </div>
+            {/* Map endpoints into ApiEndpointRow components */}
+            <div className="api-grid">
+              {Object.entries(local).map(([toolKey, toolObj]) => {
+                if (!toolObj || typeof toolObj !== 'object') return null;
+                const withEnable = Object.prototype.hasOwnProperty.call(toolObj, 'enable');
+                const displayName = toolObj.displayName || toolObj.name || toolKey;
+                // support optional labels mapping for endpoint keys: toolObj.labels || toolObj._labels
+                const labels = toolObj.labels || toolObj._labels || {};
+                return Object.keys(toolObj).filter(k => !['enable','displayName','name','labels','_labels'].includes(k)).map((keyName, idx) => (
+                  <ApiEndpointRow
+                    key={`${toolKey}-${keyName}`}
+                    toolKey={toolKey}
+                    displayName={displayName}
+                    keyName={keyName}
+                    actionLabel={labels[keyName] || keyName}
+                    value={toolObj[keyName]}
+                    index={idx}
+                    withEnable={withEnable}
+                    toolObj={toolObj}
+                    editing={local._editing}
+                    onToggle={setEnable}
+                    onMakeEditable={makeEditable}
+                    onStopEditing={stopEditing}
+                    onUpdate={updateField}
+                  />
+                ));
+              })}
             </div>
+            
 
-            <div className={`tool-row ${local.RAG_TOOL.enable === 'true' ? 'enabled' : 'disabled'}`}>{/* RAG row */}
-              <div className="col check"><input type="checkbox" checked={local.RAG_TOOL.enable === 'true'} onChange={(e)=> setEnable('RAG_TOOL', e.target.checked)} /></div>
-              <div className="col title">RAG</div>
-              <div className="col names">
-                <div>Upload</div>
-                <div>Collections</div>
-                <div>Ask</div>
-              </div>
-              <div className="col values">
-                <div>{local._editing?.tool === 'RAG_TOOL' && local._editing?.key === 'uploadfile' ? (
-                    <input autoFocus onBlur={stopEditing} value={local.RAG_TOOL.uploadfile} onChange={(e)=> updateField('RAG_TOOL','uploadfile', e.target.value)} />
-                  ) : (
-                    <span onDoubleClick={()=> makeEditable('RAG_TOOL','uploadfile')}>{local.RAG_TOOL.uploadfile}</span>
-                  )}</div>
-                <div>{local._editing?.tool === 'RAG_TOOL' && local._editing?.key === 'collectionList' ? (
-                    <input autoFocus onBlur={stopEditing} value={local.RAG_TOOL.collectionList} onChange={(e)=> updateField('RAG_TOOL','collectionList', e.target.value)} />
-                  ) : (
-                    <span onDoubleClick={()=> makeEditable('RAG_TOOL','collectionList')}>{local.RAG_TOOL.collectionList}</span>
-                  )}</div>
-                <div>{local._editing?.tool === 'RAG_TOOL' && local._editing?.key === 'askrag' ? (
-                    <input autoFocus onBlur={stopEditing} value={local.RAG_TOOL.askrag} onChange={(e)=> updateField('RAG_TOOL','askrag', e.target.value)} />
-                  ) : (
-                    <span onDoubleClick={()=> makeEditable('RAG_TOOL','askrag')}>{local.RAG_TOOL.askrag}</span>
-                  )}</div>
-              </div>
-            </div>
-
-            <div className={`tool-row ${local.SUMMARY_TOOL.enable === 'true' ? 'enabled' : 'disabled'}`}>{/* SUMMARY row */}
-              <div className="col check"><input type="checkbox" checked={local.SUMMARY_TOOL.enable === 'true'} onChange={(e)=> setEnable('SUMMARY_TOOL', e.target.checked)} /></div>
-              <div className="col title">SUMMARY</div>
-              <div className="col names">
-                <div>Get Summary</div>
-              </div>
-              <div className="col values">
-                <div>{local._editing?.tool === 'SUMMARY_TOOL' && local._editing?.key === 'getSummary' ? (
-                    <input autoFocus onBlur={stopEditing} value={local.SUMMARY_TOOL.getSummary} onChange={(e)=> updateField('SUMMARY_TOOL','getSummary', e.target.value)} />
-                  ) : (
-                    <span onDoubleClick={()=> makeEditable('SUMMARY_TOOL','getSummary')}>{local.SUMMARY_TOOL.getSummary}</span>
-                  )}</div>
-              </div>
-            </div>
-
-            <div className="form-actions">
+            <div className="form-actions" style={{ marginTop: 12 }}>
               <button className="save-btn" onClick={handleSave}>💾 Save</button>
               <button className="cancel-btn" onClick={onClose}>Cancel</button>
             </div>
@@ -145,4 +134,3 @@ export default function ApiSettingsModal({ onClose }) {
     </div>
   );
 }
-          
