@@ -952,10 +952,16 @@
           "role": "assistant",
           "text": "🎯 GROQ TOOL AUTO-EXECUTION SUCCESS\nQuery: \"give summary from sample2\"\nSelected Tool: get_summary\nParameters: {'file_name': 'sample2'}\nResult: ❌ Error: No file found named 'sample2' with extensions ['.docx', '.doc', '.pdf', '.txt', '.rtf'] in /home/crl/PoC_MCP_Tools_groq_llama_ollama/document\n\nGroq Model Response:\n{\n  \"function\": \"get_summary\",\n  \"arguments\": {\n    \"file_name\": \"sample2\"\n  }\n}",
           "ts": "2025-12-09T05:25:09.925Z"
+        },
+        {
+          "id": "m-1765273406906",
+          "role": "user",
+          "text": "hi",
+          "ts": "2025-12-09T09:43:26.906Z"
         }
       ],
       "createdAt": "2025-11-29T08:32:07.228Z",
-      "updatedAt": "2025-12-09T05:25:09.925Z"
+      "updatedAt": "2025-12-09T09:43:26.907Z"
     },
     {
       "id": "s_mirddsg1wsxd3k",
@@ -1009,10 +1015,24 @@
           "role": "assistant",
           "text": "I'm here to help! What specific information are you looking for?",
           "ts": "2025-12-04T11:48:57.918Z"
+        },
+        {
+          "id": "m-1765273315171",
+          "role": "user",
+          "text": "hi",
+          "ts": "2025-12-09T09:41:55.171Z"
         }
       ],
       "createdAt": "2025-12-04T11:45:57.313Z",
-      "updatedAt": "2025-12-04T11:48:57.918Z"
+      "updatedAt": "2025-12-09T09:41:55.171Z"
+    },
+    {
+      "id": "s_miyg5o58fqgi2b",
+      "name": "New chat",
+      "apiId": null,
+      "messages": [],
+      "createdAt": "2025-12-09T10:38:00.572Z",
+      "updatedAt": "2025-12-09T10:38:00.572Z"
     }
   ]
 }

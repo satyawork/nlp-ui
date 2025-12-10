@@ -17,25 +17,21 @@ const router = express.Router();
  *   - options (object, optional): Additional parameters for the API (temp, max_tokens, etc.)
  */
 router.post('/', async (req, res) => {
-  const { apiId, prompt: rawPrompt, sessionId, options } = req.body;
+  let { apiId, prompt: rawPrompt, sessionId, options } = req.body;
   console.log('chat request:', { apiId, sessionId });
-
-  if (!apiId || !rawPrompt) {
-    return res.status(400).json({
-      ok: false,
-      error: 'apiId and prompt required'
-    });
-  }
+  if (!rawPrompt) return res.status(400).json({ ok: false, error: 'prompt required' });
 
   const settings = await ApiSettingsStore.getSettings();
-  const api = (settings.apis || []).find(a => a.id === apiId);
-
-  if (!api) {
-    return res.status(400).json({
-      ok: false,
-      error: 'apiId not found'
-    });
+  // support a top-level `default` (global) config and per-api overrides
+  const def = settings.default || {};
+  // Resolve apiId: prefer provided apiId; otherwise use session.apiId if sessionId provided; else fallback to undefined
+  if (!apiId && sessionId) {
+    const s = await SessionsStore.getSession(sessionId);
+    if (s && s.apiId) apiId = s.apiId;
   }
+
+  let api = apiId ? (settings.apis || []).find(a => a.id === apiId) : null;
+  // if still not found, do not treat as fatal — we'll allow default.baseUrl to be used below
 
   console.log('[chat] apiId=', apiId, 'prompt=', rawPrompt.slice(0, 120) + (rawPrompt.length > 120 ? '...' : ''), 'sessionId=', sessionId);
 
@@ -123,22 +119,37 @@ router.post('/', async (req, res) => {
 
     } else {
       // No "from collection": call configured API as before
-      const headers = { 'Content-Type': 'application/json' };
-      (api.headers || []).forEach(h => {
-        if (h && h.key) headers[h.key] = h.value;
-      });
-
-      const body = {
-        query: rawPrompt,
-        ...options
+      // Resolve final baseUrl and headers using default + per-api overrides
+      // Support two modes:
+      // 1) api.baseUrl provided -> use it
+      // 2) api.endpoint provided (path) -> build from def.baseUrl or def.host+def.port
+      const buildFromDefault = (apiEntry) => {
+        if (apiEntry && apiEntry.baseUrl) return apiEntry.baseUrl;
+        if (apiEntry && apiEntry.endpoint) {
+          const host = def.baseUrl || (def.host ? `${def.host}${def.port ? `:${def.port}` : ''}` : null);
+          if (!host) return null;
+          return host.replace(/\/$/, '') + '/' + apiEntry.endpoint.replace(/^\//, '');
+        }
+        return null;
       };
 
-      console.log('[chat] POST to', api.baseUrl);
+      const finalBase = buildFromDefault(api) || (def.baseUrl || (def.host ? `${def.host}${def.port ? `:${def.port}` : ''}` : null));
+      const headersObj = { 'Content-Type': 'application/json' };
+      const collectHeaders = (arr) => {
+        (arr || []).forEach(h => { if (h && h.key) headersObj[h.key] = h.value; });
+      };
+  collectHeaders(def.headers);
+  if (api) collectHeaders(api.headers);
+
+      const body = { query: rawPrompt, ...options };
+
+  if (!finalBase) return res.status(400).json({ ok: false, error: 'No API base URL configured (set default.baseUrl or api.baseUrl/endpoint)' });
+  console.log('[chat] POST to', finalBase);
       console.log('[chat] Sending body (preview):', JSON.stringify(body).slice(0, 2000));
 
-      const apiRes = await fetch(api.baseUrl, {
+      const apiRes = await fetch(finalBase, {
         method: 'POST',
-        headers,
+        headers: headersObj,
         body: JSON.stringify(body)
       });
 
@@ -186,3 +197,4 @@ router.post('/', async (req, res) => {
 });
 
 export default router;
+

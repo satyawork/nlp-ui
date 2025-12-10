@@ -1,10 +1,24 @@
 {
   "apis": [
     {
-      "id": "api-1764304792696",
-      "name": "raj_system_new",
-      "baseUrl": "http://127.0.0.1:8080/chat",
-      "headers": []
+      "id": "api-1765277070237",
+      "name": "RAG_UPLOAD",
+      "baseUrl": "http://127.0.0.1:9000",
+      "headers": [],
+      "endpoint": "/upload"
+    },
+    {
+      "id": "api-1765277209642",
+      "name": "RAG_COLLECTION",
+      "baseUrl": "http://localhost:9000",
+      "headers": [],
+      "endpoint": "/ask"
     }
-  ]
+  ],
+  "default": {
+    "name": "Default API",
+    "baseUrl": "http://127.0.0.1",
+    "port": "8080",
+    "headers": []
+  }
 }

@@ -49,7 +49,8 @@ export function useChatLogic(current, settings) {
         }));
 
         // Send to server with increased max_tokens
-        const apiId = current.apiId || (settings.apis[0] && settings.apis[0].id);
+    // Use apiId stored on the session itself; if session has no apiId send null to let backend use default
+    const apiId = (sessionData && sessionData.apiId) || null;
         const payload = {
             apiId,
             prompt: text,

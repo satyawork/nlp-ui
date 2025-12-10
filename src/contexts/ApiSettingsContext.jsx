@@ -22,9 +22,10 @@ export function ApiSettingsProvider({ children }) {
     return await res.json();
   }
 
-  async function testApi(config) {
+  // testApi can accept either { config } or { apiId }
+  async function testApi(payload) {
     const res = await fetch('/api/api-settings/test', {
-      method: 'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({ config })
+      method: 'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify(payload)
     });
     return res.json();
   }

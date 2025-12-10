@@ -2,6 +2,9 @@ import React, { useState, useEffect } from 'react';
 import ThemeToggle from '../contexts/ThemeToggle';
 import { useApiSettings } from '../contexts/ApiSettingsContext';
 import { useChatSessions } from '../contexts/ChatSessionsContext';
+import ApiSettingsDefault from './ApiSettingsDefault';
+import ApiSettingsList from './ApiSettingsList';
+import ApiSettingsForm from './ApiSettingsForm';
 
 /**
  * API Settings Modal
@@ -14,11 +17,15 @@ import { useChatSessions } from '../contexts/ChatSessionsContext';
  * 
  * Simplified design: Only requires name and baseUrl
  * All APIs are POST requests by default
+ * 
+ * 
  */
 export default function ApiSettingsModal({ onClose }) {
   const { settings, saveSettings } = useApiSettings();
   const { current, setCurrent } = useChatSessions();
   const [local, setLocal] = useState(settings);
+  // local.default for global/default API settings
+  if (!local.default) local.default = { name: 'Default API', baseUrl: '', port: '', headers: [] };
   const [editingId, setEditingId] = useState(null);
   const [formData, setFormData] = useState({
     id: '',
@@ -41,14 +48,7 @@ export default function ApiSettingsModal({ onClose }) {
     return () => window.removeEventListener('keydown', handleEsc);
   }, [onClose]);
 
-  /**
-   * Select an API as active
-   */
-  function handleSelectApi(apiId) {
-    if (current) {
-      setCurrent({ ...current, apiId });
-    }
-  }
+
 
   /**
    * Initialize new API form
@@ -63,22 +63,48 @@ export default function ApiSettingsModal({ onClose }) {
     setEditingId('new');
   }
 
+  const { testApi } = useApiSettings();
+
+  function handleSaveDefault() {
+    // validation: require either baseUrl or host+port; validate port
+    const d = local.default || {};
+    if (d.baseUrl && d.baseUrl.trim()) {
+      try { new URL(d.baseUrl); } catch (e) { alert('Invalid default Base URL'); return; }
+    } else if (!(d.host && d.host.trim()) && !(d.baseUrl && d.baseUrl.trim())) {
+      // if no baseUrl provided, allow host+port pattern via baseUrl field split (we use baseUrl as host here)
+      // require at least baseUrl or port to be present
+      if (!d.port || !String(d.port).trim()) { alert('Provide default base URL or port'); return; }
+    }
+    if (d.port && d.port.trim()) {
+      const p = Number(d.port);
+      if (!Number.isInteger(p) || p <= 0 || p > 65535) { alert('Invalid port number'); return; }
+    }
+    const newSettings = { ...local };
+    setLocal(newSettings);
+    saveSettings(newSettings);
+    alert('Default API saved');
+  }
+
+  async function handleTestDefault() {
+    try {
+      const res = await testApi({ config: local.default });
+      alert('Test result: ' + JSON.stringify(res));
+    } catch (e) {
+      alert('Test failed: ' + String(e));
+    }
+  }
+
   /**
    * Save or update API configuration
    */
   function handleSaveApi() {
     // Validate required fields
-    if (!formData.name.trim() || !formData.baseUrl.trim()) {
-      alert('Name and Base URL are required');
-      return;
-    }
+  if (!formData.name.trim()) { alert('Name is required'); return; }
+  if (!formData.baseUrl.trim() && !(formData.endpoint && formData.endpoint.trim())) { alert('Either Base URL or Endpoint path is required'); return; }
 
     // Ensure baseUrl is a valid URL
-    try {
-      new URL(formData.baseUrl);
-    } catch (e) {
-      alert('Invalid URL format');
-      return;
+    if (formData.baseUrl && formData.baseUrl.trim()) {
+      try { new URL(formData.baseUrl); } catch (e) { alert('Invalid URL format'); return; }
     }
 
     // Add new or update existing API
@@ -115,7 +141,6 @@ export default function ApiSettingsModal({ onClose }) {
         <div className="modal-header">
           <div className="modal-title">
             <h3>🔌 API Configuration</h3>
-            <div className="modal-subtitle">Add and manage API endpoints</div>
           </div>
           <div className="modal-controls">
             <ThemeToggle />
@@ -130,176 +155,16 @@ export default function ApiSettingsModal({ onClose }) {
           </div>
         </div>
 
-        {/* ========== BODY ========== */}
         <div className="modal-body">
-          {/* List of existing APIs */}
-          {(local?.apis || []).length > 0 && (
-            <div className="api-list">
-              <div className="api-list-title">Available APIs</div>
-              {(local.apis || []).map((api) => (
-                <div key={api.id} className="api-item">
-                  {/* Radio Button + API Info */}
-                  <div className="api-selector-wrapper">
-                    <input
-                      type="radio"
-                      id={`api-radio-${api.id}`}
-                      name="selected-api"
-                      checked={current?.apiId === api.id}
-                      onChange={() => handleSelectApi(api.id)}
-                      className="api-radio"
-                    />
-                    <label htmlFor={`api-radio-${api.id}`} className="api-radio-label">
-                      <div className="api-summary">
-                        <div className="api-name-display">{api.name}</div>
-                        <div className="api-url-display">{api.baseUrl}</div>
-                        {api.headers && api.headers.length > 0 && (
-                          <div className="api-headers-count">
-                            {api.headers.length} header{api.headers.length !== 1 ? 's' : ''}
-                          </div>
-                        )}
-                      </div>
-                    </label>
-                  </div>
+          <ApiSettingsDefault local={local} setLocal={setLocal} handleSaveDefault={handleSaveDefault} handleTestDefault={handleTestDefault} />
+          { (local?.apis || []).length > 0 && <ApiSettingsList local={local} setFormData={setFormData} setEditingId={setEditingId} handleDeleteApi={handleDeleteApi} testApi={testApi} /> }
+          { editingId && <ApiSettingsForm formData={formData} setFormData={setFormData} handleSaveApi={handleSaveApi} testApi={testApi} onCancel={() => setEditingId(null)} /> }
 
-                  {/* API Actions */}
-                  <div className="api-item-actions">
-                    <button 
-                      className="edit-btn"
-                      onClick={() => {
-                        setFormData(api);
-                        setEditingId(api.id);
-                      }}
-                      title="Edit API"
-                    >
-                      ✏️ Edit
-                    </button>
-                    <button 
-                      className="delete-btn"
-                      onClick={() => handleDeleteApi(api.id)}
-                      title="Delete API"
-                    >
-                      🗑️ Delete
-                    </button>
-                  </div>
-                </div>
-              ))}
-            </div>
-          )}
-
-          {/* Add/Edit Form */}
-          {editingId && (
-            <div className="api-form">
-              <h3>{editingId === 'new' ? '➕ Add New API' : '✏️ Edit API'}</h3>
-
-              {/* Name Field */}
-              <div className="form-group">
-                <label>API Name *</label>
-                <input
-                  type="text"
-                  value={formData.name}
-                  onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                  placeholder="e.g., My LLaMA Model, OpenAI API"
-                  className="form-input"
-                />
-                <small>Friendly name to identify this API</small>
-              </div>
-
-              {/* Base URL Field */}
-              <div className="form-group">
-                <label>API Endpoint (Base URL) *</label>
-                <input
-                  type="text"
-                  value={formData.baseUrl}
-                  onChange={(e) => setFormData({ ...formData, baseUrl: e.target.value })}
-                  placeholder="e.g., http://127.0.0.1:8000/v1/completions"
-                  className="form-input"
-                />
-                <small>Full URL where requests will be POSTed to</small>
-              </div>
-
-              {/* Headers */}
-              <div className="form-group">
-                <label>Custom Headers (Optional)</label>
-                <small>Add headers like Authorization, X-API-Key, etc.</small>
-                <div className="headers-list">
-                  {(formData.headers || []).map((header, hIndex) => (
-                    <div key={hIndex} className="header-row">
-                      <input
-                        type="text"
-                        placeholder="Header name"
-                        value={header.key}
-                        onChange={(e) => {
-                          const newHeaders = [...formData.headers];
-                          newHeaders[hIndex].key = e.target.value;
-                          setFormData({ ...formData, headers: newHeaders });
-                        }}
-                        className="header-key"
-                      />
-                      <input
-                        type="text"
-                        placeholder="Header value (hidden)"
-                        value={header.value}
-                        onChange={(e) => {
-                          const newHeaders = [...formData.headers];
-                          newHeaders[hIndex].value = e.target.value;
-                          setFormData({ ...formData, headers: newHeaders });
-                        }}
-                        className="header-value"
-                      />
-                      <button
-                        className="remove-header-btn"
-                        onClick={() => {
-                          const newHeaders = (formData.headers || []).filter((_, idx) => idx !== hIndex);
-                          setFormData({ ...formData, headers: newHeaders });
-                        }}
-                        title="Remove header"
-                      >
-                        ✕
-                      </button>
-                    </div>
-                  ))}
-                </div>
-                <button
-                  className="add-header-btn"
-                  onClick={() => setFormData({ ...formData, headers: [...(formData.headers || []), { key: '', value: '' }] })}
-                >
-                  + Add Header
-                </button>
-              </div>
-
-              {/* Form Actions */}
-              <div className="form-actions">
-                <button 
-                  onClick={handleSaveApi} 
-                  className="save-btn"
-                  title="Save API configuration"
-                >
-                  💾 Save
-                </button>
-                <button 
-                  onClick={() => setEditingId(null)}
-                  className="cancel-btn"
-                  title="Cancel editing"
-                >
-                  Cancel
-                </button>
-              </div>
-            </div>
-          )}
-
-          {/* Add Button */}
           {!editingId && (
-            <button 
-              onClick={addApi} 
-              className="add-api-btn"
-              title="Add new API configuration"
-            >
-              ➕ Add New API
-            </button>
+            <button onClick={addApi} className="add-api-btn" title="Add new API configuration">➕ Add New API</button>
           )}
         </div>
 
-        {/* ========== FOOTER ========== */}
         <div className="modal-footer">
           <div className="modal-info">
             <strong>Note:</strong> All APIs use POST requests. Headers are stored securely and not displayed after saving.

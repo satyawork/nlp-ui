@@ -16,7 +16,7 @@ const router = express.Router();
 await ensureUploadDir();
 
 // === HARDCODED SETTINGS ===
-const TARGET_UPLOAD_URL = 'http://localhost:8080/upload-file';
+// The forward target may come from ApiSettingsStore.default.uploadUrl or per-api.uploadUrl
 const MAX_BYTES = 10 * 1024 * 1024; // 10 MB
 const FORWARD_TIMEOUT_MS = 30_000; // 30 seconds
 
@@ -110,17 +110,52 @@ router.post('/upload', upload.single('file'), async (req, res) => {
       contentType: req.file.mimetype,
     });
 
-    const controller = new AbortController();
-    const timeout = setTimeout(() => controller.abort(), FORWARD_TIMEOUT_MS);
-
-    console.log(`[UPLOAD ${logId}] Forwarding to ${TARGET_UPLOAD_URL} (timeout ${FORWARD_TIMEOUT_MS}ms)`);
+  const controller = new AbortController();
+  const timeout = setTimeout(() => controller.abort(), FORWARD_TIMEOUT_MS);
 
     let response;
     const start = Date.now();
     try {
-      response = await fetch(TARGET_UPLOAD_URL, {
+      // Resolve forwarding target from settings if available
+      const settings = await ApiSettingsStore.getSettings();
+      const def = settings.default || {};
+      // If client provided apiId in query or body, prefer per-api upload endpoint
+      const apiId = req.body.apiId || req.query.apiId || null;
+      let headerObj = { ...form.getHeaders() };
+
+      const buildFromDefault = (apiEntry) => {
+        if (!apiEntry) return null;
+        if (apiEntry.uploadUrl) return apiEntry.uploadUrl;
+        if (apiEntry.endpoint) {
+          const host = def.baseUrl || (def.host ? `${def.host}${def.port ? `:${def.port}` : ''}` : null);
+          if (!host) return null;
+          return host.replace(/\/$/, '') + '/' + apiEntry.endpoint.replace(/^\//, '');
+        }
+        return null;
+      };
+
+      let target = null;
+      if (apiId) {
+        const api = (settings.apis || []).find(a => a.id === apiId);
+        if (api) {
+          target = buildFromDefault(api) || null;
+          const collect = (arr) => { (arr || []).forEach(h => { if (h && h.key) headerObj[h.key] = h.value; }); };
+          collect(def.headers);
+          collect(api.uploadHeaders || api.headers || api.headers);
+        }
+      } else {
+        // no apiId provided: use default.uploadUrl if set
+        if (def.uploadUrl) target = def.uploadUrl;
+        (def.headers || []).forEach(h => { if (h && h.key) headerObj[h.key] = h.value; });
+      }
+
+      if (!target) {
+        throw new Error('No upload target configured (provide apiId or set default.baseUrl + api.endpoint)');
+      }
+
+      response = await fetch(target, {
         method: 'POST',
-        headers: form.getHeaders(),
+        headers: headerObj,
         body: form,
         signal: controller.signal,
       });

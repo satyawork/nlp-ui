@@ -200,6 +200,26 @@ body {
   padding: 16px;
 }
 
+/* subtle centered watermark logo behind message list */
+.message-list::before {
+  content: '';
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 50vw;
+  height: 50vw;
+  background-image: url('/public/bel-logo.svg');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+  opacity: 0.08;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.message-list > .message { position: relative; z-index: 1; }
+
 .message {
   display: flex;
   margin-bottom: 8px;
@@ -378,6 +398,27 @@ body {
 .chat-textarea::-moz-selection {
   background: #cfe9ff;
   color: #02243a;
+}
+
+/* Inline form row used by API settings default and edit forms */
+.form-row-inline {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  flex-wrap: nowrap;
+}
+.form-row-inline .form-input {
+  min-width: 0; /* allow flex children to shrink correctly inside flex container */
+}
+.form-row-inline .form-input.compact.name-field {
+  flex: 1 1 180px;
+}
+.form-row-inline .form-input.compact.base-field {
+  flex: 2 1 320px;
+}
+.form-row-inline .form-input.compact.small.endpoint-field {
+  flex: 0 0 180px;
+  width: 180px;
 }
 
 /* Icon Button Styles */
@@ -834,14 +875,14 @@ body {
   border-radius: 8px;
   cursor: pointer;
   font-size: 12px;
-  color: var(--accent);
+  color: #1aa9e6;
   font-weight: 600;
   transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .add-header-btn:hover {
   background: var(--hover-bg);
-  border-color: var(--accent);
+  border-color: #1aa9e6;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
@@ -868,15 +909,15 @@ body {
 }
 
 .save-btn {
-  background: var(--accent);
+  background: #01A0E4; /* requested blue */
   color: white;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 4px 15px rgba(1, 160, 228, 0.18);
 }
 
 .save-btn:hover {
   transform: translateY(-2px);
-  background: var(--accent-hover);
-  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+  background: #0096d9; /* slightly darker hover */
+  box-shadow: 0 8px 25px rgba(1, 160, 228, 0.28);
 }
 
 .save-btn:active {
@@ -894,6 +935,28 @@ body {
   border-color: var(--btn-hover-border);
   transform: translateY(-2px);
 }
+
+/* ========== TEST BUTTON ========== */
+.test-btn {
+  flex: 1;
+  padding: 11px 16px;
+  border-radius: 8px;
+  border: 1px solid rgba(0, 64, 91, 0.15);
+  background: #00405b; /* theme color */
+  color: #fff;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 12px rgba(0, 64, 91, 0.16);
+}
+.test-btn:hover {
+  transform: translateY(-2px);
+  background: #003445; /* slightly darker */
+  border-color: rgba(0, 64, 91, 0.3);
+  box-shadow: 0 8px 20px rgba(0, 64, 91, 0.24);
+}
+.test-btn:active { transform: translateY(0); }
 
 /* ========== ADD API BUTTON ========== */
 .add-api-btn {
