@@ -11,6 +11,7 @@ import fs from 'fs';
 import fsPromises from 'fs/promises';
 import { AbortController } from 'abort-controller';
 import { fileTypeFromFile } from 'file-type';
+import { uploadFileToMCP } from '../adapters/mcp.js';
 
 const router = express.Router();
 await ensureUploadDir();
@@ -118,6 +119,48 @@ router.post('/upload', upload.single('file'), async (req, res) => {
     try {
       // Resolve forwarding target from settings if available
       const settings = await ApiSettingsStore.getSettings();
+      
+      // Check if RAG and SUMMARY are disabled -> route to MCP
+      const ragEnabled = settings.RAG?.enable === 'true' || settings.RAG?.enable === true;
+      const summaryEnabled = settings.SUMMARY?.enable === 'true' || settings.SUMMARY?.enable === true;
+      
+      if (!ragEnabled && !summaryEnabled && settings.MCP?.uploadfile) {
+        console.log(`[UPLOAD ${logId}] RAG and SUMMARY disabled, routing to MCP: ${settings.MCP.uploadfile}`);
+        
+        const mcpResult = await uploadFileToMCP(
+          settings.MCP.uploadfile,
+          tempPath,
+          req.file.originalname,
+          req.file.mimetype
+        );
+        
+        clearTimeout(timeout);
+        
+        // Cleanup temp file
+        await fsPromises.unlink(tempPath).catch(err => {
+          console.warn(`[UPLOAD ${logId}] Failed to delete temp file: ${String(err)}`);
+        });
+        
+        if (!mcpResult.ok) {
+          console.error(`[UPLOAD ${logId}] MCP upload failed:`, mcpResult.error);
+          return res.status(500).json({
+            ok: false,
+            error: 'Failed to upload to MCP',
+            detail: mcpResult.error,
+          });
+        }
+        
+        console.log(`[UPLOAD ${logId}] MCP upload successful`);
+        return res.json({
+          ok: true,
+          forwarded: true,
+          routedTo: 'MCP',
+          remoteStatus: mcpResult.status,
+          remoteBody: mcpResult.data,
+          uploadedAt: nowIso ? nowIso() : new Date().toISOString(),
+        });
+      }
+      
       const def = settings.default || {};
       // If client provided apiId in query or body, prefer per-api upload endpoint
       const apiId = req.body.apiId || req.query.apiId || null;

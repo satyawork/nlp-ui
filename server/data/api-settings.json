@@ -10,7 +10,7 @@
     "askrag": "http://localhost:9000/ask"
   },
   "SUMMARY": {
-    "enable": "true",
+    "enable": "false",
     "getSummary": "http://loaclhost:9900/upload"
   }
 }
