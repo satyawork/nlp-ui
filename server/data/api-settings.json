@@ -4,7 +4,7 @@
     "chat": "http://localhost:8080/chat"
   },
   "RAG": {
-    "enable": "false",
+    "enable": "true",
     "uploadfile": "http://localhost:9000/upload",
     "collectionList": "http://localhost:9000/collections",
     "askrag": "http://localhost:9000/ask"

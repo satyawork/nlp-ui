@@ -24,12 +24,20 @@ router.post('/', async (req, res) => {
 
   const settings = await ApiSettingsStore.getSettings();
   
-  // Check if RAG and SUMMARY are disabled -> route to MCP
-  const ragEnabled = settings.RAG?.enable === 'true' || settings.RAG?.enable === true;
-  const summaryEnabled = settings.SUMMARY?.enable === 'true' || settings.SUMMARY?.enable === true;
+  // support a top-level `default` (global) config and per-api overrides
+  const def = settings.default || {};
   
-  if (!ragEnabled && !summaryEnabled && settings.MCP?.chat) {
-    console.log(`[chat] RAG and SUMMARY disabled, routing to MCP: ${settings.MCP.chat}`);
+  // Check RAG flag and if "from collection" phrase is present
+  const ragEnabled = settings.RAG?.enable === 'true' || settings.RAG?.enable === true;
+  const fromCollectionRegex = /(.*)\bfrom collection\b\s*(.+)$/i;
+  const match = rawPrompt.match(fromCollectionRegex);
+  const hasFromCollection = !!match;
+  
+  console.log(`[chat] RAG enabled: ${ragEnabled}, Has "from collection": ${hasFromCollection}`);
+  
+  // If "from collection" is NOT present OR RAG is disabled -> route to MCP
+  if (!hasFromCollection && settings.MCP?.chat) {
+    console.log(`[chat] No "from collection" phrase detected, routing to MCP: ${settings.MCP.chat}`);
     
     try {
       const mcpResult = await chatWithMCP(settings.MCP.chat, rawPrompt);
@@ -77,8 +85,55 @@ router.post('/', async (req, res) => {
     }
   }
   
-  // support a top-level `default` (global) config and per-api overrides
-  const def = settings.default || {};
+  // If "from collection" is present but RAG is disabled -> also route to MCP
+  if (hasFromCollection && !ragEnabled && settings.MCP?.chat) {
+    console.log(`[chat] "from collection" phrase found but RAG is disabled, routing to MCP: ${settings.MCP.chat}`);
+    
+    try {
+      const mcpResult = await chatWithMCP(settings.MCP.chat, rawPrompt);
+      
+      if (!mcpResult.ok) {
+        console.error('[chat] MCP chat failed:', mcpResult.error);
+        return res.status(500).json({
+          ok: false,
+          error: 'MCP chat failed',
+          detail: mcpResult.error,
+        });
+      }
+      
+      // Save messages to session if provided
+      if (sessionId) {
+        const session = await SessionsStore.getSession(sessionId);
+        if (session) {
+          session.messages.push({
+            id: 'm-' + Date.now(),
+            role: 'user',
+            text: rawPrompt,
+            ts: nowIso()
+          });
+          session.messages.push({
+            id: 'm-' + (Date.now() + 1),
+            role: 'assistant',
+            text: mcpResult.output,
+            ts: nowIso()
+          });
+          session.updatedAt = nowIso();
+          await SessionsStore.saveSession(session);
+        }
+      }
+      
+      console.log('[chat] MCP chat successful');
+      return res.json({ ok: true, output: mcpResult.output, routedTo: 'MCP' });
+      
+    } catch (e) {
+      console.error('[chat] MCP routing error:', e);
+      return res.status(500).json({
+        ok: false,
+        error: 'MCP routing failed',
+        detail: String(e),
+      });
+    }
+  }
   // Resolve apiId: prefer provided apiId; otherwise use session.apiId if sessionId provided; else fallback to undefined
   if (!apiId && sessionId) {
     const s = await SessionsStore.getSession(sessionId);
@@ -122,7 +177,7 @@ router.post('/', async (req, res) => {
         return res.status(400).json({ ok: false, error: 'Prompt must include a question before "from collection"' });
       }
 
-      console.log(`[chat] Routing to /ask target. collection='${collection}', question='${question.slice(0,120)}'`);
+      console.log(`[chat] "from collection" phrase detected with RAG enabled. Routing to RAG /ask API. collection='${collection}', question='${question.slice(0,120)}'`);
 
       const form = new FormData();
       form.append('question', question);
